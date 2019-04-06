@@ -1,0 +1,36 @@
+{
+  "name": "o2diff",
+  "version": "0.0.1",
+  "description": "Compares two objects and returns the difference between them",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "lint": "eslint --ext .js src/ test/",
+    "test": "NODE_ENV=test mocha",
+    "coverage": "nyc npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexanderMac/o2diff.git"
+  },
+  "keywords": [
+    "object",
+    "diff",
+    "difference",
+    "compare",
+    "changes"
+  ],
+  "author": "Alexander Mac",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlexanderMac/o2diff/issues"
+  },
+  "homepage": "https://github.com/AlexanderMac/o2diff#readme",
+  "dependencies": {},
+  "devDependencies": {}
+}
