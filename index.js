@@ -72,7 +72,8 @@ function _getObjectsDiff(left, right) {
 
 function _getObjectValues(obj, paths) {
   return _.reduce(paths, (result, path) => {
-    _.set(result, path, _.get(obj, path));
+    let val = _convertSpecial(_.get(obj, path));
+    _.set(result, path, val);
     return result;
   }, {});
 }
@@ -87,7 +88,7 @@ function _isSimplePrimitive(prim) {
 }
 
 function _convertSpecial(val) {
-  if (val && val.constructor.name === 'ObjectId') {
+  if (val && val.constructor.name === 'ObjectID') {
     return val.toString();
   }
   return val;
