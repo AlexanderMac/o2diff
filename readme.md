@@ -1,13 +1,18 @@
 # o2diff
 
-Compares two objects and returns the difference between them (changed values, changed paths, differences). It has only one runtime dependency - lodash.
+Compares two objects and returns the difference between them (changed values, changed paths, differences).
 
 [![Build Status](https://travis-ci.org/AlexanderMac/o2diff.svg?branch=master)](https://travis-ci.org/AlexanderMac/o2diff)
 [![Code Coverage](https://codecov.io/gh/AlexanderMac/o2diff/branch/master/graph/badge.svg)](https://codecov.io/gh/AlexanderMac/o2diff)
 [![npm version](https://badge.fury.io/js/o2diff.svg)](https://badge.fury.io/js/o2diff)
 
 ## Features
-TODO
+- Three output formats:
+  - `diff`, the object with two properties: `{ left, right }`, to get the objects difference.
+  - `values`, the object with three properties: `{ changed, added, deleted }`, to get changed values.
+  - `paths`, the object with three properties: `{ changedPaths, addedPaths, deletedPaths }`, to get changed object paths.
+- Converters for special types (ObjectId).
+- Only one runtime dependency - lodash.
 
 ## Commands
 ```sh
@@ -57,7 +62,7 @@ Compares `original` and `current` objects and returns the difference between the
 
   - `original` - the original object.
   - `current` - the current (actual) object.
-  - `format` - the result format: `diff` || `values` || `paths`.
+  - `format` - the output format: `diff` || `values` || `paths`.
 
 ## Author
 Alexander Mac
