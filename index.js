@@ -10,28 +10,20 @@ const FORMATS = {
 
 // eslint-disable-next-line max-statements
 module.exports = (original, current, format = FORMATS.diff) => {
-  let originalVsCurrent = _getObjectsDiff(current, original);
-  let currentVsOriginal = _getObjectsDiff(original, current);
+  let addedAndChanged = _getObjectsDiff(current, original);
+  let deletedAndChanged = _getObjectsDiff(original, current);
 
-  let originalAndAddedPaths = _getObjectPaths(originalVsCurrent);
-  let originalAndDeletedPaths = _getObjectPaths(currentVsOriginal);
-
-  let originalPaths = _.intersection(originalAndAddedPaths, originalAndDeletedPaths);
-  let addedPaths = _.difference(originalAndAddedPaths, originalAndDeletedPaths);
-  let deletedPaths = _.difference(originalAndDeletedPaths, originalAndAddedPaths);
-
-  let changed = _getObjectsDiff(
-    _getObjectValues(current, originalPaths),
-    _getObjectValues(original, originalPaths)
-  );
-  let changedPaths = _getObjectPaths(changed);
+  let changedPaths = _.intersection(addedAndChanged.paths, deletedAndChanged.paths);
+  let addedPaths = _.difference(addedAndChanged.paths, changedPaths);
+  let deletedPaths = _.difference(deletedAndChanged.paths, changedPaths);
 
   if (format === FORMATS.diff) {
-    let left = currentVsOriginal;
-    let right = originalVsCurrent;
+    let left = deletedAndChanged.values;
+    let right = addedAndChanged.values;
     return { left, right };
   }
   if (format === FORMATS.values) {
+    let changed = _getObjectValues(current, changedPaths);
     let added = _getObjectValues(current, addedPaths);
     let deleted = _getObjectValues(original, deletedPaths);
     return { changed, added, deleted };
@@ -49,10 +41,14 @@ function _getObjectsDiff(left, right) {
     let leftVal = _.get(left, path);
     let rightVal = _.get(right, path);
     if (!_.isEqual(leftVal, rightVal)) {
-      _.set(result, path, leftVal);
+      _.set(result.values, path, leftVal);
+      result.paths.push(path);
     }
     return result;
-  }, {});
+  }, {
+    values: {},
+    paths: []
+  });
 }
 
 function _getObjectPaths(obj, curPath = '', isArray = false) {
