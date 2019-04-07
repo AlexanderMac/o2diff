@@ -9,7 +9,7 @@ const FORMATS = {
 };
 
 // eslint-disable-next-line max-statements
-module.exports = (original, current, format = FORMATS.diff) => {
+module.exports = (original, current, format) => {
   let addedAndChanged = _getObjectsDiff(current, original);
   let deletedAndChanged = _getObjectsDiff(original, current);
 
@@ -34,12 +34,31 @@ module.exports = (original, current, format = FORMATS.diff) => {
   throw _getError('Unsupported format: ' + format);
 };
 
+function _getObjectPaths(obj, curPath = '', isArray = false) {
+  let paths = [];
+  _.each(obj, (val, key) => {
+    val = _convertSpecial(val);
+    let newPath = isArray ? `${curPath}[${key}]` : `${curPath}.${key}`;
+    if (_isSimplePrimitive(val)) {
+      paths.push(newPath);
+    } else if (_.isArray(val)) {
+      paths = paths.concat(_getObjectPaths(val, newPath, true));
+    } else {
+      paths = paths.concat(_getObjectPaths(val, newPath));
+    }
+  });
+  if (!curPath) {
+    paths = _.map(paths, path => _.trimStart(path, '.'));
+  }
+  return paths;
+}
+
 function _getObjectsDiff(left, right) {
   let leftPaths = _getObjectPaths(left);
 
   return _.reduce(leftPaths, (result, path) => {
-    let leftVal = _.get(left, path);
-    let rightVal = _.get(right, path);
+    let leftVal = _convertSpecial(_.get(left, path));
+    let rightVal = _convertSpecial(_.get(right, path));
     if (!_.isEqual(leftVal, rightVal)) {
       _.set(result.values, path, leftVal);
       result.paths.push(path);
@@ -51,28 +70,6 @@ function _getObjectsDiff(left, right) {
   });
 }
 
-function _getObjectPaths(obj, curPath = '', isArray = false) {
-  let paths = [];
-  _.each(obj, (val, key) => {
-    /* TODO: use constructor.name
-    if (val instanceof mongoose.Types.ObjectId) {
-      val = _safeToString(val);
-    }*/
-    let newPath = isArray ? `${curPath}[${key}]` : `${curPath}.${key}`;
-    if (_isSimplePrim(val)) {
-      paths.push(newPath);
-    } else if (_.isArray(val)) {
-      paths = paths.concat(_getObjectPaths(val, newPath, true));
-    } else if (_.isObject(val)) {
-      paths = paths.concat(_getObjectPaths(val, newPath));
-    }
-  });
-  if (!curPath) {
-    paths = _.map(paths, path => _.trimStart(path, '.'));
-  }
-  return paths;
-}
-
 function _getObjectValues(obj, paths) {
   return _.reduce(paths, (result, path) => {
     _.set(result, path, _.get(obj, path));
@@ -80,7 +77,7 @@ function _getObjectValues(obj, paths) {
   }, {});
 }
 
-function _isSimplePrim(prim) {
+function _isSimplePrimitive(prim) {
   return _.isBoolean(prim) ||
       _.isNumber(prim) ||
       _.isString(prim) ||
@@ -89,13 +86,18 @@ function _isSimplePrim(prim) {
       _.isRegExp(prim);
 }
 
-function _safeToString(val) {
-  return _.isNil(val) ? val : val.toString();
+function _convertSpecial(val) {
+  if (val && val.constructor.name === 'ObjectId') {
+    return val.toString();
+  }
+  return val;
 }
 
+/*
 // TODO: not implemented
-function _cleanup(val) {
+function _cleanupArray(val) {
 }
+*/
 
 function _getError(msg) {
   let err = new Error(msg);

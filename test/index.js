@@ -1,9 +1,47 @@
 'use strict';
 
+const _      = require('lodash');
 const should = require('should');
 const o2diff = require('../');
 
 describe('o2diff', () => {
+  describe('special types', () => {
+    function getObjectId(id) {
+      function ObjectId() {
+        this._id = id || _.random(1000);
+        this.toString = function() {
+          return this._id.toString();
+        };
+      }
+      return new ObjectId();
+    }
+
+    it('should convert to string special types (ObjectId)', () => {
+      let ids = [getObjectId(), getObjectId(100), getObjectId(), getObjectId(500)];
+      let original = {
+        idOne: ids[0],
+        idTwo: ids[1],
+        idThree: ids[2]
+      };
+      let current = {
+        idOne: ids[0],
+        idTwo: ids[3],
+        idThree: ids[2]
+      };
+
+      let expected = {
+        left: {
+          idTwo: '100'
+        },
+        right: {
+          idTwo: '500'
+        }
+      };
+      let actual = o2diff(original, current, 'diff');
+      should(actual).eql(expected);
+    });
+  });
+
   describe('functional tests', () => {
     function getDefaultOriginal() {
       return {
@@ -27,7 +65,11 @@ describe('o2diff', () => {
           { type: 'mobile', value: '+11111' }
         ],
         address: {
-          city: 'NY'
+          city: 'New York',
+          location: {
+            latitude: 40.730610,
+            longitude: -73.935242
+          }
         }
       };
     }
@@ -59,7 +101,11 @@ describe('o2diff', () => {
             }
           ],
           address: {
-            city: 'NY'
+            city: 'New York',
+            location: {
+              latitude: 40.730610,
+              longitude: -73.935242
+            }
           }
         }
       };
@@ -75,7 +121,11 @@ describe('o2diff', () => {
         added: {
           age: 25,
           address: {
-            city: 'NY'
+            city: 'New York',
+            location: {
+              latitude: 40.730610,
+              longitude: -73.935242
+            }
           }
         },
         deleted: {
@@ -103,7 +153,9 @@ describe('o2diff', () => {
       let expected = {
         addedPaths: [
           'age',
-          'address.city'
+          'address.city',
+          'address.location.latitude',
+          'address.location.longitude'
         ],
         deletedPaths: [
           'lastName'
