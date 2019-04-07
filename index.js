@@ -10,25 +10,31 @@ const FORMATS = {
 
 // eslint-disable-next-line max-statements
 module.exports = (original, current, format = FORMATS.diff) => {
-  let changed = _getObjectsDiff(current, original);
+  let originalVsCurrent = _getObjectsDiff(current, original);
+  let currentVsOriginal = _getObjectsDiff(original, current);
 
-  let originalPaths = _getObjectPaths(original);
-  let currentPaths = _getObjectPaths(current);
+  let originalAndAddedPaths = _getObjectPaths(originalVsCurrent);
+  let originalAndDeletedPaths = _getObjectPaths(currentVsOriginal);
+
+  let originalPaths = _.intersection(originalAndAddedPaths, originalAndDeletedPaths);
+  let addedPaths = _.difference(originalAndAddedPaths, originalAndDeletedPaths);
+  let deletedPaths = _.difference(originalAndDeletedPaths, originalAndAddedPaths);
+
+  let changed = _getObjectsDiff(
+    _getObjectValues(current, originalPaths),
+    _getObjectValues(original, originalPaths)
+  );
   let changedPaths = _getObjectPaths(changed);
-  let addedPaths = _.difference(currentPaths, originalPaths);
-  let deletedPaths = _.difference(originalPaths, currentPaths);
 
   if (format === FORMATS.diff) {
-    changedPaths.push(...addedPaths);
-    changedPaths.push(...deletedPaths);
-    let left = _getObjectValues(original, changedPaths);
-    let right = _getObjectValues(current, changedPaths);
+    let left = currentVsOriginal;
+    let right = originalVsCurrent;
     return { left, right };
   }
   if (format === FORMATS.values) {
     let added = _getObjectValues(current, addedPaths);
     let deleted = _getObjectValues(original, deletedPaths);
-    return { added, deleted, changed };
+    return { changed, added, deleted };
   }
   if (format === FORMATS.paths) {
     return { addedPaths, deletedPaths, changedPaths };
@@ -40,10 +46,10 @@ function _getObjectsDiff(left, right) {
   let leftPaths = _getObjectPaths(left);
 
   return _.reduce(leftPaths, (result, path) => {
-    let changedVal = _.get(left, path);
-    let originalVal = _.get(right, path);
-    if (!_.isEqual(changedVal, originalVal)) {
-      _.set(result, path, changedVal);
+    let leftVal = _.get(left, path);
+    let rightVal = _.get(right, path);
+    if (!_.isEqual(leftVal, rightVal)) {
+      _.set(result, path, leftVal);
     }
     return result;
   }, {});

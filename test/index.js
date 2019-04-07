@@ -39,21 +39,16 @@ describe('o2diff', () => {
       left: {
         firstName: 'John',
         lastName: 'Smith',
-        age: undefined,
         email: 'john@mail.com',
         phones: [
           {
             type: 'home',
             value: '+12222'
           }
-        ],
-        address: {
-          city: undefined
-        }
+        ]
       },
       right: {
         firstName: 'Michael',
-        lastName: undefined,
         age: 25,
         email: 'michael@mail.com',
         phones: [
@@ -87,17 +82,13 @@ describe('o2diff', () => {
       },
       changed: {
         firstName: 'Michael',
-        age: 25,
         email: 'michael@mail.com',
         phones: [
           {
             type: 'work',
             value: '+13333'
           }
-        ],
-        address: {
-          city: 'NY'
-        }
+        ]
       }
     };
     let actual = o2diff(original, current, 'values');
@@ -118,11 +109,9 @@ describe('o2diff', () => {
       ],
       changedPaths: [
         'firstName',
-        'age',
         'email',
         'phones[0].type',
-        'phones[0].value',
-        'address.city'
+        'phones[0].value'
       ]
     };
     let actual = o2diff(original, current, 'paths');
