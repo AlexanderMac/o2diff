@@ -58,7 +58,7 @@ o2diff(original, current, 'paths');  // returns { changedPaths, addedPaths, dele
 ## API
 
 ### o2diff(original, current, format)
-Compares `original` and `current` objects and returns the difference between them in the requested `format` (`diff` || `values` || `paths`).
+Compares `original` and `current` objects and returns the difference between them in the requested `format`.
 
   - `original` - the original object.
   - `current` - the current (actual) object.
