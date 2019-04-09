@@ -18,8 +18,8 @@ module.exports = (original, current, format) => {
   let deletedPaths = _.difference(deletedAndChanged.paths, changedPaths);
 
   if (format === FORMATS.diff) {
-    let left = deletedAndChanged.values;
-    let right = addedAndChanged.values;
+    let left = _compact(deletedAndChanged.values);
+    let right = _compact(addedAndChanged.values);
     return { left, right };
   }
   if (format === FORMATS.values) {
@@ -71,11 +71,12 @@ function _getObjectsDiff(left, right) {
 }
 
 function _getObjectValues(obj, paths) {
-  return _.reduce(paths, (result, path) => {
+  let values = _.reduce(paths, (result, path) => {
     let val = _convertSpecial(_.get(obj, path));
     _.set(result, path, val);
     return result;
   }, {});
+  return _compact(values);
 }
 
 function _isSimplePrimitive(prim) {
@@ -94,11 +95,22 @@ function _convertSpecial(val) {
   return val;
 }
 
-/*
 // TODO: not implemented
-function _cleanupArray(val) {
-}
+function _compact(obj) {
+  return obj;
+/*
+  return _.reduce(obj, val => {
+    if (_isSimplePrimitive(val)) {
+      return val;
+    }
+    if (_.isArray(val)) {
+      let todo = _compact(val);
+      return _.compact(todo);
+    }
+    return _compact(val);
+  });
 */
+}
 
 function _getError(msg) {
   let err = new Error(msg);
