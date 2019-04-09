@@ -5,6 +5,97 @@ const should = require('should');
 const o2diff = require('../');
 
 describe('o2diff', () => {
+  describe('inputs are null', () => {
+    it('should return empty diff when original and current are null', () => {
+      let original = null;
+      let current = null;
+
+      let expected = {
+        left: {},
+        right: {}
+      };
+      let actual = o2diff(original, current, 'diff');
+      should(actual).eql(expected);
+    });
+
+    it('should return empty left and right the same as current, when original is null', () => {
+      let original = null;
+      let current = { data: 'somedata' };
+
+      let expected = {
+        left: {},
+        right: {
+          data: 'somedata'
+        }
+      };
+      let actual = o2diff(original, current, 'diff');
+      should(actual).eql(expected);
+    });
+
+    it('should return left the same as original and empty right, when current is null', () => {
+      let original = { data: 'somedata' };
+      let current = null;
+
+      let expected = {
+        left: {
+          data: 'somedata'
+        },
+        right: {}
+      };
+      let actual = o2diff(original, current, 'diff');
+      should(actual).eql(expected);
+    });
+  });
+
+  describe('inputs are array', () => {
+    it('should return left with one element and empty right, when last elem is deleted', () => {
+      let original = ['a', 'b', 'c'];
+      let current = ['a', 'b'];
+
+      let expected = {
+        left: {
+          '2': 'c'
+        },
+        right: {}
+      };
+      let actual = o2diff(original, current, 'diff');
+      should(actual).eql(expected);
+    });
+
+    it('should return left and right with one element, when middle elem is changed', () => {
+      let original = ['a', 'b', 'c'];
+      let current = ['a', 'd', 'c'];
+
+      let expected = {
+        left: {
+          '1': 'b'
+        },
+        right: {
+          '1': 'd'
+        }
+      };
+      let actual = o2diff(original, current, 'diff');
+      should(actual).eql(expected);
+    });
+
+    it('should return left with one element and right with two elements, when two elements are added to the end', () => {
+      let original = ['a', 'b', 'c'];
+      let current = ['a', 'b', 'd', 'e'];
+
+      let expected = {
+        left: {
+          '2': 'c'
+        },
+        right: {
+          '2': 'd',
+          '3': 'e'
+        }
+      };
+      let actual = o2diff(original, current, 'diff');
+      should(actual).eql(expected);
+    });
+  });
+
   describe('special types', () => {
     function getObjectId(id) {
       function ObjectID() {
@@ -43,7 +134,7 @@ describe('o2diff', () => {
   });
 
   describe('functional tests', () => {
-    function getDefaultOriginal() {
+    function getOriginal() {
       return {
         firstName: 'John',
         lastName: 'Smith',
@@ -55,7 +146,7 @@ describe('o2diff', () => {
       };
     }
 
-    function getDefaultCurrent() {
+    function getCurrent() {
       return {
         firstName: 'Michael',
         age: 25,
@@ -75,8 +166,8 @@ describe('o2diff', () => {
     }
 
     it('should return diff for two objects when format is diff', () => {
-      let original = getDefaultOriginal();
-      let current = getDefaultCurrent();
+      let original = getOriginal();
+      let current = getCurrent();
 
       let expected = {
         left: {
@@ -114,8 +205,8 @@ describe('o2diff', () => {
     });
 
     it('should return changed values for two objects when format is values', () => {
-      let original = getDefaultOriginal();
-      let current = getDefaultCurrent();
+      let original = getOriginal();
+      let current = getCurrent();
 
       let expected = {
         added: {
@@ -147,8 +238,8 @@ describe('o2diff', () => {
     });
 
     it('should return changed paths for two objects when format is paths', () => {
-      let original = getDefaultOriginal();
-      let current = getDefaultCurrent();
+      let original = getOriginal();
+      let current = getCurrent();
 
       let expected = {
         addedPaths: [
@@ -172,8 +263,8 @@ describe('o2diff', () => {
     });
 
     it('should throw error when format is unsupported', () => {
-      let original = getDefaultOriginal();
-      let current = getDefaultCurrent();
+      let original = getOriginal();
+      let current = getCurrent();
 
       let expected = new Error('Unsupported format: IncorrectFormat');
       expected.type = 'O2DiffError';
