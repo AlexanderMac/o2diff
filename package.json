@@ -4,13 +4,14 @@
   "description": "Compares two objects and returns the difference between them",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "src"
   ],
   "engines": {
     "node": ">=6"
   },
   "scripts": {
-    "lint": "eslint --ext .js index.js test/",
+    "lint": "eslint --ext .js index.js src/ test/",
     "test": "NODE_ENV=test mocha",
     "coverage": "nyc npm test"
   },

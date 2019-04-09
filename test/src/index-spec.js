@@ -2,9 +2,9 @@
 
 const _      = require('lodash');
 const should = require('should');
-const o2diff = require('../');
+const o2diff = require('../../src');
 
-describe('o2diff', () => {
+describe('o2diff / index', () => {
   describe('inputs are null', () => {
     it('should return empty diff when original and current are null', () => {
       let original = null;
@@ -47,7 +47,7 @@ describe('o2diff', () => {
     });
   });
 
-  describe('inputs are array', () => {
+  describe('inputs are arrays', () => {
     it('should return left with one element and empty right, when last elem is deleted', () => {
       let original = ['a', 'b', 'c'];
       let current = ['a', 'b'];
@@ -96,7 +96,7 @@ describe('o2diff', () => {
     });
   });
 
-  describe('special types', () => {
+  describe('inputs contains special types', () => {
     function getObjectId(id) {
       function ObjectID() {
         this._id = id || _.random(1000);
