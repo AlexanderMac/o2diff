@@ -51,16 +51,16 @@ exports.getObjectValues = (obj, paths) => {
 };
 
 // TODO: test it
-exports.isSimplePrimitive = (prim) => {
-  return _.isBoolean(prim) ||
-      _.isNumber(prim) ||
-      _.isString(prim) ||
-      _.isDate(prim) ||
-      _.isSymbol(prim) ||
-      _.isRegExp(prim);
+exports.isSimplePrimitive = (val) => {
+  return _.isNil(val) ||
+         _.isBoolean(val) ||
+         _.isNumber(val) ||
+         _.isString(val) ||
+         _.isDate(val) ||
+         _.isSymbol(val) ||
+         _.isRegExp(val);
 };
 
-// TODO: test it
 exports.convertSpecial = (val) => {
   if (val && val.constructor.name === 'ObjectID') {
     return val.toString();
@@ -68,22 +68,30 @@ exports.convertSpecial = (val) => {
   return val;
 };
 
-// TODO: implement it
-// TODO: test it
 exports.compact = (obj) => {
-  return obj;
-/*
-  return _.reduce(obj, val => {
-    if (_isSimplePrimitive(val)) {
-      return val;
+  obj = exports.convertSpecial(obj);
+  if (exports.isSimplePrimitive(obj)) {
+    return obj;
+  }
+  if (_.isArray(obj)) {
+    return _.compact(obj);
+  }
+
+  let result = {};
+  _.each(obj, (objItem, objKey) => {
+    objItem = exports.convertSpecial(objItem);
+    if (exports.isSimplePrimitive(objItem)) {
+      result[objKey] = objItem;
+    } else if (_.isArray(objItem)) {
+      result[objKey] = _.filter(objItem, v => !_.isNil(v));
+      _.each(result[objKey], (arrItem, arrIndex) => {
+        result[objKey][arrIndex] = exports.compact(arrItem);
+      });
+    } else {
+      result[objKey] = exports.compact(objItem);
     }
-    if (_.isArray(val)) {
-      let todo = _compact(val);
-      return _.compact(todo);
-    }
-    return _compact(val);
   });
-*/
+  return result;
 };
 
 // TODO: test it

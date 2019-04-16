@@ -134,16 +134,17 @@ describe('o2diff / index', () => {
       });
     });
 
-    describe('inputs are regular objects', () => {
+    describe('inputs are complex objects', () => {
       function getOriginal() {
         return {
           firstName: 'John',
           lastName: 'Smith',
           email: 'john@mail.com',
           phones: [
-            { type: 'home', value: '+12222' },
-            { type: 'mobile', value: '+11111' }
-          ]
+            { type: 'home', value: '+11111' },
+            { type: 'work', value: '+12222' }
+          ],
+          roles: ['admin', 'owner']
         };
       }
 
@@ -153,8 +154,9 @@ describe('o2diff / index', () => {
           age: 25,
           email: 'michael@mail.com',
           phones: [
-            { type: 'work', value: '+13333' },
-            { type: 'mobile', value: '+11111' }
+            { type: 'home', value: '+11111' },
+            { type: 'mobile', value: '+13333' },
+            { type: 'work', value: '+14444' }
           ],
           address: {
             city: 'New York',
@@ -162,7 +164,8 @@ describe('o2diff / index', () => {
               latitude: 40.730610,
               longitude: -73.935242
             }
-          }
+          },
+          roles: ['owner', 'editor']
         };
       }
 
@@ -177,10 +180,11 @@ describe('o2diff / index', () => {
             email: 'john@mail.com',
             phones: [
               {
-                type: 'home',
+                type: 'work',
                 value: '+12222'
               }
-            ]
+            ],
+            roles: ['admin', 'owner']
           },
           right: {
             firstName: 'Michael',
@@ -188,8 +192,12 @@ describe('o2diff / index', () => {
             email: 'michael@mail.com',
             phones: [
               {
-                type: 'work',
+                type: 'mobile',
                 value: '+13333'
+              },
+              {
+                type: 'work',
+                value: '+14444'
               }
             ],
             address: {
@@ -198,7 +206,8 @@ describe('o2diff / index', () => {
                 latitude: 40.730610,
                 longitude: -73.935242
               }
-            }
+            },
+            roles: ['owner', 'editor']
           }
         };
         let actual = o2diff(original, current, 'diff');
@@ -210,8 +219,25 @@ describe('o2diff / index', () => {
         let current = getCurrent();
 
         let expected = {
+          changed: {
+            firstName: 'Michael',
+            email: 'michael@mail.com',
+            phones: [
+              {
+                type: 'mobile',
+                value: '+13333'
+              }
+            ],
+            roles: ['owner', 'editor']
+          },
           added: {
             age: 25,
+            phones: [
+              {
+                type: 'work',
+                value: '+14444'
+              }
+            ],
             address: {
               city: 'New York',
               location: {
@@ -222,16 +248,6 @@ describe('o2diff / index', () => {
           },
           deleted: {
             lastName: 'Smith'
-          },
-          changed: {
-            firstName: 'Michael',
-            email: 'michael@mail.com',
-            phones: [
-              {
-                type: 'work',
-                value: '+13333'
-              }
-            ]
           }
         };
         let actual = o2diff(original, current, 'values');
@@ -243,20 +259,24 @@ describe('o2diff / index', () => {
         let current = getCurrent();
 
         let expected = {
+          changedPaths: [
+            'firstName',
+            'email',
+            'phones[1].type',
+            'phones[1].value',
+            'roles[0]',
+            'roles[1]'
+          ],
           addedPaths: [
             'age',
+            'phones[2].type',
+            'phones[2].value',
             'address.city',
             'address.location.latitude',
             'address.location.longitude'
           ],
           deletedPaths: [
             'lastName'
-          ],
-          changedPaths: [
-            'firstName',
-            'email',
-            'phones[0].type',
-            'phones[0].value'
           ]
         };
         let actual = o2diff(original, current, 'paths');
