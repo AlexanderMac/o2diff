@@ -3,7 +3,6 @@ logs
 *.log
 tmp
 .tmp
-dist
 .DS_STORE
 npm-debug.log
 
