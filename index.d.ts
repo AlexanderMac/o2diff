@@ -18,3 +18,4 @@ interface DiffPathsResult {
 export function diff(original: any, current: any): DiffResult;
 export function diffValues(original: any, current: any): DiffValuesResult;
 export function diffPaths(original: any, current: any): DiffPathsResult;
+export function revert(dest: any, src: any, customizer: (destVal: any, srcVal: any) => any): any;

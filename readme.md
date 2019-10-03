@@ -11,6 +11,7 @@ Compares two objects and returns the differences between them (changed values, c
   - `diff`: `{ left, right }` to get the objects differences.
   - `values`: `{ changed, added, deleted }`, to get the changed values.
   - `paths`: `{ changed, added, deleted }`, to get the changed paths.
+- Revert function, to revert destination object to source object.
 - Converters for special types (ObjectId).
 
 ## Commands
@@ -76,6 +77,13 @@ Returns the added, changed and deleted paths between `original` and `current`.
   - `original` - the original object.
   - `current` - the current (actual) object.
   - returns `{ changed, added, deleted }` object.
+
+### revert(dest, src, customizer)
+Reverts `dest` object to `src`, calls `customizer` for each `dest.path`.
+
+  - `dest` - the destination object.
+  - `src` - the source object.
+  - `customizer` - the function that is called for each `dest.path`.
 
 ## Author
 Alexander Mac

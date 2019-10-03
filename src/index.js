@@ -32,6 +32,17 @@ exports.diffPaths = (original, current) => {
   };
 };
 
+exports.revert = (dest, src, customizer) => {
+  let srcPaths = utils.getObjectPaths(src);
+  return _.reduce(srcPaths, (result, path) => {
+    let destValue = _.get(dest, path);
+    let srcValue = _.get(src, path);
+    let value = customizer(destValue, srcValue);
+    _.set(result, path, value);
+    return result;
+  }, {});
+};
+
 function _getPaths(original, current) {
   let addedAndChanged = utils.getObjectsDiff(current, original);
   let deletedAndChanged = utils.getObjectsDiff(original, current);
