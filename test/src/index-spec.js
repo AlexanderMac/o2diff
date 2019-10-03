@@ -15,7 +15,7 @@ describe('o2diff / index', () => {
           left: {},
           right: {}
         };
-        let actual = o2diff(original, current, 'diff');
+        let actual = o2diff.diff(original, current);
         should(actual).eql(expected);
       });
 
@@ -29,7 +29,7 @@ describe('o2diff / index', () => {
             data: 'somedata'
           }
         };
-        let actual = o2diff(original, current, 'diff');
+        let actual = o2diff.diff(original, current);
         should(actual).eql(expected);
       });
 
@@ -43,7 +43,7 @@ describe('o2diff / index', () => {
           },
           right: {}
         };
-        let actual = o2diff(original, current, 'diff');
+        let actual = o2diff.diff(original, current);
         should(actual).eql(expected);
       });
     });
@@ -59,7 +59,7 @@ describe('o2diff / index', () => {
           },
           right: {}
         };
-        let actual = o2diff(original, current, 'diff');
+        let actual = o2diff.diff(original, current);
         should(actual).eql(expected);
       });
 
@@ -75,7 +75,7 @@ describe('o2diff / index', () => {
             '1': 'd'
           }
         };
-        let actual = o2diff(original, current, 'diff');
+        let actual = o2diff.diff(original, current);
         should(actual).eql(expected);
       });
 
@@ -92,7 +92,7 @@ describe('o2diff / index', () => {
             '3': 'e'
           }
         };
-        let actual = o2diff(original, current, 'diff');
+        let actual = o2diff.diff(original, current);
         should(actual).eql(expected);
       });
     });
@@ -129,7 +129,7 @@ describe('o2diff / index', () => {
             idTwo: '500'
           }
         };
-        let actual = o2diff(original, current, 'diff');
+        let actual = o2diff.diff(original, current);
         should(actual).eql(expected);
       });
     });
@@ -169,7 +169,7 @@ describe('o2diff / index', () => {
         };
       }
 
-      it('should return diff for two objects when format is diff', () => {
+      it('should return diff for two objects in diff format', () => {
         let original = getOriginal();
         let current = getCurrent();
 
@@ -210,11 +210,11 @@ describe('o2diff / index', () => {
             roles: ['owner', 'editor']
           }
         };
-        let actual = o2diff(original, current, 'diff');
+        let actual = o2diff.diff(original, current);
         should(actual).eql(expected);
       });
 
-      it('should return changed values for two objects when format is values', () => {
+      it('should return changed values for two objects in diffValues format', () => {
         let original = getOriginal();
         let current = getCurrent();
 
@@ -250,16 +250,16 @@ describe('o2diff / index', () => {
             lastName: 'Smith'
           }
         };
-        let actual = o2diff(original, current, 'values');
+        let actual = o2diff.diffValues(original, current);
         should(actual).eql(expected);
       });
 
-      it('should return changed paths for two objects when format is paths', () => {
+      it('should return changed paths for two objects when in diffPaths format', () => {
         let original = getOriginal();
         let current = getCurrent();
 
         let expected = {
-          changedPaths: [
+          changed: [
             'firstName',
             'email',
             'phones[1].type',
@@ -267,7 +267,7 @@ describe('o2diff / index', () => {
             'roles[0]',
             'roles[1]'
           ],
-          addedPaths: [
+          added: [
             'age',
             'phones[2].type',
             'phones[2].value',
@@ -275,21 +275,12 @@ describe('o2diff / index', () => {
             'address.location.latitude',
             'address.location.longitude'
           ],
-          deletedPaths: [
+          deleted: [
             'lastName'
           ]
         };
-        let actual = o2diff(original, current, 'paths');
+        let actual = o2diff.diffPaths(original, current);
         should(actual).eql(expected);
-      });
-
-      it('should throw error when format is unsupported', () => {
-        let original = getOriginal();
-        let current = getCurrent();
-
-        let expected = new Error('Unsupported format: IncorrectFormat');
-        expected.type = 'O2DiffError';
-        should(o2diff.bind(null, original, current, 'IncorrectFormat')).throw(expected);
       });
     });
   });

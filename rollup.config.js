@@ -4,7 +4,7 @@ const commonjs    = require('rollup-plugin-commonjs');
 const nodeResolve = require('rollup-plugin-node-resolve');
 
 module.exports = {
-  input: 'src/index.js',
+  input: 'index.js',
   output: {
     file: 'dist/o2diff.js',
     name: 'o2diff',

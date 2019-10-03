@@ -1,6 +1,6 @@
 # o2diff
 
-Compares two objects and returns the difference between them (changed values, changed paths, differences).
+Compares two objects and returns the differences between them (changed values, changed paths, differences).
 
 [![Build Status](https://travis-ci.org/AlexanderMac/o2diff.svg?branch=master)](https://travis-ci.org/AlexanderMac/o2diff)
 [![Code Coverage](https://codecov.io/gh/AlexanderMac/o2diff/branch/master/graph/badge.svg)](https://codecov.io/gh/AlexanderMac/o2diff)
@@ -8,11 +8,10 @@ Compares two objects and returns the difference between them (changed values, ch
 
 ## Features
 - Three output formats:
-  - `diff`, the object with two properties: `{ left, right }`, to get the objects difference.
-  - `values`, the object with three properties: `{ changed, added, deleted }`, to get changed values.
-  - `paths`, the object with three properties: `{ changedPaths, addedPaths, deletedPaths }`, to get changed object paths.
+  - `diff`: `{ left, right }` to get the objects differences.
+  - `values`: `{ changed, added, deleted }`, to get the changed values.
+  - `paths`: `{ changed, added, deleted }`, to get the changed paths.
 - Converters for special types (ObjectId).
-- Only one runtime dependency - lodash.
 
 ## Commands
 ```sh
@@ -50,19 +49,33 @@ let current = {
   }
 };
 
-o2diff(original, current, 'diff');   // returns { left, right } diff object
-o2diff(original, current, 'values'); // returns { changed, added, deleted } values object
-o2diff(original, current, 'paths');  // returns { changedPaths, addedPaths, deletedPaths } paths object
+o2diff.diff(original, current);   // returns { left, right } with objects diff
+o2diff.diffValues(original, current); // returns { changed, added, deleted } with values diff
+o2diff.diffPaths(original, current);  // returns { changed, added, deleted } with paths diff
 ```
 
 ## API
 
-### o2diff(original, current, format)
-Compares `original` and `current` objects and returns the difference between them in the requested `format`.
+### diff(original, current)
+Returns the differences between `original` and `current`.
 
   - `original` - the original object.
   - `current` - the current (actual) object.
-  - `format` - the output format: `diff` || `values` || `paths`.
+  - returns `{ left, right }` object.
+
+### diffValues(original, current)
+Returns the added, changed and deleted values between `original` and `current`.
+
+  - `original` - the original object.
+  - `current` - the current (actual) object.
+  - returns `{ changed, added, deleted }` object.
+
+### diffPaths(original, current)
+Returns the added, changed and deleted paths between `original` and `current`.
+
+  - `original` - the original object.
+  - `current` - the current (actual) object.
+  - returns `{ changed, added, deleted }` object.
 
 ## Author
 Alexander Mac

@@ -1,29 +1,20 @@
-type Format =
-  | 'diff'
-  | 'values'
-  | 'paths';
-
 interface DiffResult {
   left: object;
   right: object;
 }
 
-interface ValuesResult {
+interface DiffValuesResult {
   changed: object;
   added: object;
   deleted: object;
 }
 
-interface PathsResult {
-  changedPaths: string[];
-  addedPaths: string[];
-  deletedPaths: string[];
+interface DiffPathsResult {
+  changed: string[];
+  added: string[];
+  deleted: string[];
 }
 
-type Result =
-  | DiffResult
-  | ValuesResult
-  | PathsResult;
-
-declare function o2diff(original: object, current: object, format: Format): PathsResult;
-export = o2diff;
+export function diff(original: any, current: any): DiffResult;
+export function diffValues(original: any, current: any): DiffValuesResult;
+export function diffPaths(original: any, current: any): DiffPathsResult;
