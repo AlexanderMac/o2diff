@@ -4,12 +4,14 @@
   "description": "Compares two objects and returns the difference between them",
   "main": "src/index.js",
   "files": [
-    "src"
+    "src",
+    "dist"
   ],
   "engines": {
     "node": ">=6"
   },
   "scripts": {
+    "build": "rollup -c",
     "lint": "eslint --ext .js src/ test/",
     "test": "NODE_ENV=test mocha",
     "coverage": "nyc npm test"
@@ -38,6 +40,9 @@
     "eslint": "^6.5.1",
     "mocha": "^6.2.1",
     "nyc": "^14.1.1",
+    "rollup": "^1.22.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "should": "^13.2.3"
   }
 }
