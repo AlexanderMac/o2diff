@@ -6,7 +6,7 @@ const nodeResolve = require('rollup-plugin-node-resolve');
 module.exports = {
   input: 'index.js',
   output: {
-    file: 'dist/o2diff.js',
+    file: 'index.esm.js',
     name: 'o2diff',
     format: 'umd',
     globals: {

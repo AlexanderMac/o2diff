@@ -144,10 +144,22 @@
 	  let { changedPaths, addedPaths, deletedPaths } = _getPaths(original, current);
 
 	  return {
-	    changedPaths,
-	    addedPaths,
-	    deletedPaths
+	    changed: changedPaths,
+	    added: addedPaths,
+	    deleted: deletedPaths
 	  };
+	};
+
+	var revert = (dest, src, customizer) => {
+		console.log('AAA')
+	  let srcPaths = utils.getObjectPaths(src);
+	  return lodash.reduce(srcPaths, (result, path) => {
+	    let destValue = lodash.get(dest, path);
+	    let srcValue = lodash.get(src, path);
+	    let value = customizer(destValue, srcValue);
+	    lodash.set(result, path, value);
+	    return result;
+	  }, {});
 	};
 
 	function _getPaths(original, current) {
@@ -170,7 +182,8 @@
 	var src = {
 		diff: diff,
 		diffValues: diffValues,
-		diffPaths: diffPaths
+		diffPaths: diffPaths,
+		revert: revert
 	};
 
 	var o2diff = src;
