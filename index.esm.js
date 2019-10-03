@@ -151,7 +151,6 @@
 	};
 
 	var revert = (dest, src, customizer) => {
-		console.log('AAA')
 	  let srcPaths = utils.getObjectPaths(src);
 	  return lodash.reduce(srcPaths, (result, path) => {
 	    let destValue = lodash.get(dest, path);
