@@ -9,7 +9,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "scripts": {
     "build": "rollup -c",
