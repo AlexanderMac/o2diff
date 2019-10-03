@@ -1,3 +1,10 @@
+# <sub>v1.0.0</sub>
+#### _Oct. 3, 2019_
+  * Split main function into three functions for each supported format.
+  * Add revert function.
+  * Create typescript definition file.
+  * Drop support for node v6.
+
 # <sub>v0.3.0</sub>
 #### _Oct. 3, 2019_
   * Add browser support. Integrate rollup to build client bundle.
