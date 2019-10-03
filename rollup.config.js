@@ -8,7 +8,7 @@ module.exports = {
   output: {
     file: 'dist/o2diff.js',
     name: 'o2diff',
-    format: 'iife',
+    format: 'umd',
     globals: {
       'lodash': '_'
     }
