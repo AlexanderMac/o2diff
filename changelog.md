@@ -1,3 +1,7 @@
+# <sub>v1.0.2</sub>
+#### _Nov. 2, 2019_
+  * Integrate rollup babel plugin to convert ESNext code to ES5.
+
 # <sub>v1.0.0</sub>
 #### _Oct. 3, 2019_
   * Split main function into three functions for each supported format.
