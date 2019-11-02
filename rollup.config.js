@@ -1,7 +1,8 @@
 'use strict';
 
-const commonjs    = require('rollup-plugin-commonjs');
+const commonjs = require('rollup-plugin-commonjs');
 const nodeResolve = require('rollup-plugin-node-resolve');
+const babel = require('rollup-plugin-babel');
 
 module.exports = {
   input: 'index.js',
@@ -15,7 +16,10 @@ module.exports = {
   },
   plugins: [
     nodeResolve(),
-    commonjs()
+    commonjs(),
+    babel({
+      exclude: 'node_modules/**'
+    })
   ],
   external: [
     'lodash'
