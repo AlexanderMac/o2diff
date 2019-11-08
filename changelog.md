@@ -1,3 +1,7 @@
+# <sub>v1.1.0</sub>
+#### _Nov. 8, 2019_
+  * Add `getPaths` function that returns all the paths of the object.
+
 # <sub>v1.0.2</sub>
 #### _Nov. 2, 2019_
   * Integrate rollup babel plugin to convert ESNext code to ES5.
