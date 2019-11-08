@@ -2,7 +2,7 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('lodash')) :
 	typeof define === 'function' && define.amd ? define(['lodash'], factory) :
 	(global = global || self, global.o2diff = factory(global._));
-}(this, function (lodash) { 'use strict';
+}(this, (function (lodash) { 'use strict';
 
 	lodash = lodash && lodash.hasOwnProperty('default') ? lodash['default'] : lodash;
 
@@ -186,6 +186,10 @@
 	  }, {});
 	};
 
+	var getPaths = function getPaths(obj) {
+	  return utils.getObjectPaths(obj, '', lodash.isArray(obj));
+	};
+
 	function _getPaths(original, current) {
 	  var addedAndChanged = utils.getObjectsDiff(current, original);
 	  var deletedAndChanged = utils.getObjectsDiff(original, current);
@@ -209,11 +213,12 @@
 	  diff: diff,
 	  diffValues: diffValues,
 	  diffPaths: diffPaths,
-	  revert: revert
+	  revert: revert,
+	  getPaths: getPaths
 	};
 
 	var o2diff = src;
 
 	return o2diff;
 
-}));
+})));

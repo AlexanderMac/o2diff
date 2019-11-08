@@ -43,6 +43,10 @@ exports.revert = (dest, src, customizer) => {
   }, {});
 };
 
+exports.getPaths = (obj) => {
+  return utils.getObjectPaths(obj, '', _.isArray(obj));
+};
+
 function _getPaths(original, current) {
   let addedAndChanged = utils.getObjectsDiff(current, original);
   let deletedAndChanged = utils.getObjectsDiff(original, current);

@@ -333,5 +333,35 @@ describe('o2diff / main', () => {
         should(actual).eql(expected);
       });
     });
+
+    describe('getPaths', () => {
+      it('should return the object\'s paths', () => {
+        let obj = {
+          a: 1,
+          b: {
+            ba: 2,
+            bc: [1, 2, 3]
+          },
+          c: [
+            { ca: 1, cb: [1, 2] },
+            3
+          ]
+        };
+        let expected = [
+          'a',
+          'b.ba',
+          'b.bc[0]',
+          'b.bc[1]',
+          'b.bc[2]',
+          'c[0].ca',
+          'c[0].cb[0]',
+          'c[0].cb[1]',
+          'c[1]'
+        ];
+
+        let actual = o2diff.getPaths(obj);
+        should(actual).eql(expected);
+      });
+    });
   });
 });

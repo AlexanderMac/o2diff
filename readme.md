@@ -85,6 +85,11 @@ Reverts `dest` object to `src`, calls `customizer` for each `dest.path`.
   - `src` - the source object.
   - `customizer` - the function that is called for each `dest.path`.
 
+### getPaths(obj)
+Returns all the paths of the object.
+
+  - `obj` - the object.
+
 ## Author
 Alexander Mac
 
