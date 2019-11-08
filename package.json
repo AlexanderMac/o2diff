@@ -41,12 +41,12 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "eslint": "^6.5.1",
-    "mocha": "^6.2.1",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "eslint": "^6.6.0",
+    "mocha": "^6.2.2",
     "nyc": "^14.1.1",
-    "rollup": "^1.22.0",
+    "rollup": "^1.26.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
