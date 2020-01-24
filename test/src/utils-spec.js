@@ -1,8 +1,6 @@
-'use strict';
-
-const _      = require('lodash');
+const _ = require('lodash');
 const should = require('should');
-const utils  = require('../../src/utils');
+const utils = require('../../src/utils');
 
 describe('o2diff / utils', () => {
   describe('convertSpecial', () => {
@@ -101,7 +99,7 @@ describe('o2diff / utils', () => {
               latitude: 40.730615,
               longitude: undefined
             }
-          ],
+          ]
         },
         roles: ['owner', 'editor']
       };

@@ -1,6 +1,4 @@
-'use strict';
-
-const _      = require('lodash');
+const _ = require('lodash');
 const should = require('should');
 const o2diff = require('../../src');
 
