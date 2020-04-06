@@ -361,5 +361,44 @@ describe('o2diff / main', () => {
         should(actual).eql(expected);
       });
     });
+
+    describe('omitPaths', () => {
+      it('should return the object without excluded paths', () => {
+        let obj = {
+          id: 1,
+          a: 1,
+          b: {
+            id: 2,
+            ba: 2,
+            bc: [1, 2, 3]
+          },
+          c: [
+            { id: 3, a: 1, cb: [1, 2] },
+            3
+          ],
+          d: {
+            da: '1'
+          }
+        };
+        let excludedPaths = [
+          'a',
+          '*.id',
+          'd.*'
+        ];
+        let expected = {
+          b: {
+            ba: 2,
+            bc: [1, 2, 3]
+          },
+          c: [
+            { a: 1, cb: [1, 2] },
+            3
+          ]
+        };
+
+        let actual = o2diff.omitPaths(obj, excludedPaths);
+        should(actual).eql(expected);
+      });
+    });
   });
 });

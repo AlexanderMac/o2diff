@@ -4,14 +4,14 @@
 	(global = global || self, global.o2diff = factory(global._));
 }(this, (function (lodash) { 'use strict';
 
-	lodash = lodash && lodash.hasOwnProperty('default') ? lodash['default'] : lodash;
+	lodash = lodash && Object.prototype.hasOwnProperty.call(lodash, 'default') ? lodash['default'] : lodash;
 
 	function createCommonjsModule(fn, module) {
 		return module = { exports: {} }, fn(module, module.exports), module.exports;
 	}
 
 	var utils = createCommonjsModule(function (module, exports) {
-
+	  // TODO: test it
 	  exports.getObjectPaths = function (obj) {
 	    var curPath = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 	    var isArray = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
@@ -134,88 +134,108 @@
 	var utils_6 = utils.compact;
 	var utils_7 = utils.getError;
 
-	var diff = function diff(original, current) {
-	  var _getPaths2 = _getPaths(original, current),
-	      addedAndChanged = _getPaths2.addedAndChanged,
-	      deletedAndChanged = _getPaths2.deletedAndChanged;
+	var src = createCommonjsModule(function (module, exports) {
+	  exports.diff = function (original, current) {
+	    var _getPaths2 = _getPaths(original, current),
+	        addedAndChanged = _getPaths2.addedAndChanged,
+	        deletedAndChanged = _getPaths2.deletedAndChanged;
 
-	  return {
-	    left: utils.compact(deletedAndChanged.values),
-	    right: utils.compact(addedAndChanged.values)
+	    return {
+	      left: utils.compact(deletedAndChanged.values),
+	      right: utils.compact(addedAndChanged.values)
+	    };
 	  };
-	};
 
-	var diffValues = function diffValues(original, current) {
-	  var _getPaths3 = _getPaths(original, current),
-	      changedPaths = _getPaths3.changedPaths,
-	      addedPaths = _getPaths3.addedPaths,
-	      deletedPaths = _getPaths3.deletedPaths;
+	  exports.diffValues = function (original, current) {
+	    var _getPaths3 = _getPaths(original, current),
+	        changedPaths = _getPaths3.changedPaths,
+	        addedPaths = _getPaths3.addedPaths,
+	        deletedPaths = _getPaths3.deletedPaths;
 
-	  return {
-	    changed: utils.getObjectValues(current, changedPaths),
-	    added: utils.getObjectValues(current, addedPaths),
-	    deleted: utils.getObjectValues(original, deletedPaths)
+	    return {
+	      changed: utils.getObjectValues(current, changedPaths),
+	      added: utils.getObjectValues(current, addedPaths),
+	      deleted: utils.getObjectValues(original, deletedPaths)
+	    };
 	  };
-	};
 
-	var diffPaths = function diffPaths(original, current) {
-	  var _getPaths4 = _getPaths(original, current),
-	      changedPaths = _getPaths4.changedPaths,
-	      addedPaths = _getPaths4.addedPaths,
-	      deletedPaths = _getPaths4.deletedPaths;
+	  exports.diffPaths = function (original, current) {
+	    var _getPaths4 = _getPaths(original, current),
+	        changedPaths = _getPaths4.changedPaths,
+	        addedPaths = _getPaths4.addedPaths,
+	        deletedPaths = _getPaths4.deletedPaths;
 
-	  return {
-	    changed: changedPaths,
-	    added: addedPaths,
-	    deleted: deletedPaths
+	    return {
+	      changed: changedPaths,
+	      added: addedPaths,
+	      deleted: deletedPaths
+	    };
 	  };
-	};
 
-	var revert = function revert(dest, src, customizer) {
-	  var srcPaths = utils.getObjectPaths(src);
-	  return lodash.reduce(srcPaths, function (result, path) {
-	    var destValue = lodash.get(dest, path);
+	  exports.revert = function (dest, src, customizer) {
+	    var srcPaths = utils.getObjectPaths(src, '', lodash.isArray(src));
+	    return lodash.reduce(srcPaths, function (result, path) {
+	      var destValue = lodash.get(dest, path);
 
-	    var srcValue = lodash.get(src, path);
+	      var srcValue = lodash.get(src, path);
 
-	    var value = customizer(destValue, srcValue);
+	      var value = customizer(destValue, srcValue);
 
-	    lodash.set(result, path, value);
+	      lodash.set(result, path, value);
 
-	    return result;
-	  }, {});
-	};
-
-	var getPaths = function getPaths(obj) {
-	  return utils.getObjectPaths(obj, '', lodash.isArray(obj));
-	};
-
-	function _getPaths(original, current) {
-	  var addedAndChanged = utils.getObjectsDiff(current, original);
-	  var deletedAndChanged = utils.getObjectsDiff(original, current);
-
-	  var changedPaths = lodash.intersection(addedAndChanged.paths, deletedAndChanged.paths);
-
-	  var addedPaths = lodash.difference(addedAndChanged.paths, changedPaths);
-
-	  var deletedPaths = lodash.difference(deletedAndChanged.paths, changedPaths);
-
-	  return {
-	    addedAndChanged: addedAndChanged,
-	    deletedAndChanged: deletedAndChanged,
-	    changedPaths: changedPaths,
-	    addedPaths: addedPaths,
-	    deletedPaths: deletedPaths
+	      return result;
+	    }, {});
 	  };
-	}
 
-	var src = {
-	  diff: diff,
-	  diffValues: diffValues,
-	  diffPaths: diffPaths,
-	  revert: revert,
-	  getPaths: getPaths
-	};
+	  exports.getPaths = function (obj) {
+	    return utils.getObjectPaths(obj, '', lodash.isArray(obj));
+	  };
+
+	  exports.omitPaths = function (obj, excludedPaths) {
+	    var includedPaths = exports.getPaths(obj);
+	    includedPaths = lodash.filter(includedPaths, function (path) {
+	      var isIgnored = lodash.some(excludedPaths, function (ignoredPath) {
+	        if (lodash.startsWith(ignoredPath, '*.')) {
+	          return lodash.endsWith(path, lodash.trimStart(ignoredPath, '*.'));
+	        }
+
+	        if (lodash.endsWith(ignoredPath, '.*')) {
+	          return lodash.startsWith(path, lodash.trimEnd(ignoredPath, '.*'));
+	        }
+
+	        return ignoredPath === path;
+	      });
+
+	      return !isIgnored;
+	    });
+	    return utils.getObjectValues(obj, includedPaths);
+	  };
+
+	  function _getPaths(original, current) {
+	    var addedAndChanged = utils.getObjectsDiff(current, original);
+	    var deletedAndChanged = utils.getObjectsDiff(original, current);
+
+	    var changedPaths = lodash.intersection(addedAndChanged.paths, deletedAndChanged.paths);
+
+	    var addedPaths = lodash.difference(addedAndChanged.paths, changedPaths);
+
+	    var deletedPaths = lodash.difference(deletedAndChanged.paths, changedPaths);
+
+	    return {
+	      addedAndChanged: addedAndChanged,
+	      deletedAndChanged: deletedAndChanged,
+	      changedPaths: changedPaths,
+	      addedPaths: addedPaths,
+	      deletedPaths: deletedPaths
+	    };
+	  }
+	});
+	var src_1 = src.diff;
+	var src_2 = src.diffValues;
+	var src_3 = src.diffPaths;
+	var src_4 = src.revert;
+	var src_5 = src.getPaths;
+	var src_6 = src.omitPaths;
 
 	var o2diff = src;
 

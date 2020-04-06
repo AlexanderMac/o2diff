@@ -90,6 +90,12 @@ Returns all the paths of the object.
 
   - `obj` - the object.
 
+### omitPaths(obj, excludedPaths)
+Returns the object without `excludedPaths`.
+
+  - `obj` - the object.
+  - `excludedPaths` - the array of paths to exclude. The path can be with mask: `*.name` or `name.*` to exclude only path started or ended with the name.
+
 ## Author
 Alexander Mac
 

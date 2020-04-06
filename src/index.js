@@ -31,7 +31,7 @@ exports.diffPaths = (original, current) => {
 };
 
 exports.revert = (dest, src, customizer) => {
-  let srcPaths = utils.getObjectPaths(src);
+  let srcPaths = utils.getObjectPaths(src, '', _.isArray(src));
   return _.reduce(srcPaths, (result, path) => {
     let destValue = _.get(dest, path);
     let srcValue = _.get(src, path);
@@ -43,6 +43,24 @@ exports.revert = (dest, src, customizer) => {
 
 exports.getPaths = (obj) => {
   return utils.getObjectPaths(obj, '', _.isArray(obj));
+};
+
+exports.omitPaths = (obj, excludedPaths) => {
+  let includedPaths = exports.getPaths(obj);
+  includedPaths = _.filter(includedPaths, path => {
+    let isIgnored = _.some(excludedPaths, ignoredPath => {
+      if (_.startsWith(ignoredPath, '*.')) {
+        return _.endsWith(path, _.trimStart(ignoredPath, '*.'));
+      }
+      if (_.endsWith(ignoredPath, '.*')) {
+        return _.startsWith(path, _.trimEnd(ignoredPath, '.*'));
+      }
+      return ignoredPath === path;
+    });
+    return !isIgnored;
+  });
+
+  return utils.getObjectValues(obj, includedPaths);
 };
 
 function _getPaths(original, current) {
