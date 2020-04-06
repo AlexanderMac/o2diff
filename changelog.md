@@ -1,3 +1,7 @@
+# <sub>v1.2.0</sub>
+#### _Apr. 6, 2020_
+  * Add `omitPaths` function that returns the object with excluded paths.
+
 # <sub>v1.1.0</sub>
 #### _Nov. 8, 2019_
   * Add `getPaths` function that returns all the paths of the object.
