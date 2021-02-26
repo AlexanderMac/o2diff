@@ -1,3 +1,8 @@
+# <sub>v2.0.0</sub>
+#### _Feb. 26, 2021_
+  * Drop support for Node versions prior to v12.
+  * Update dependecies.
+
 # <sub>v1.2.0</sub>
 #### _Apr. 6, 2020_
   * Add `omitPaths` function that returns the object with excluded paths.
