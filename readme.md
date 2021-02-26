@@ -2,7 +2,7 @@
 
 Compares two objects and returns the differences between them (changed values, changed paths, differences).
 
-[![Build Status](https://travis-ci.org/AlexanderMac/o2diff.svg?branch=master)](https://travis-ci.org/AlexanderMac/o2diff)
+[![Build Status](https://github.com/AlexanderMac/o2diff/workflows/CI/badge.svg)](https://github.com/AlexanderMac/o2diff/actions?query=workflow%3ACI)
 [![Code Coverage](https://codecov.io/gh/AlexanderMac/o2diff/branch/master/graph/badge.svg)](https://codecov.io/gh/AlexanderMac/o2diff)
 [![npm version](https://badge.fury.io/js/o2diff.svg)](https://badge.fury.io/js/o2diff)
 
@@ -22,7 +22,7 @@ $ npm i o2diff
 
 ## Usage
 ```js
-const o2diff = require('o2diff');
+const o2diff = require('o2diff')
 
 let original = {
   firstName: 'John',
@@ -32,7 +32,7 @@ let original = {
     { type: 'home', value: '+12222' },
     { type: 'mobile', value: '+11111' }
   ]
-};
+}
 let current = {
   firstName: 'Michael',
   age: 25,
@@ -48,11 +48,11 @@ let current = {
       longitude: -73.935242
     }
   }
-};
+}
 
-o2diff.diff(original, current);   // returns { left, right } with objects diff
-o2diff.diffValues(original, current); // returns { changed, added, deleted } with values diff
-o2diff.diffPaths(original, current);  // returns { changed, added, deleted } with paths diff
+o2diff.diff(original, current)   // returns { left, right } with objects diff
+o2diff.diffValues(original, current) // returns { changed, added, deleted } with values diff
+o2diff.diffPaths(original, current)  // returns { changed, added, deleted } with paths diff
 ```
 
 ## API
