@@ -6,7 +6,7 @@ Compares two objects and returns the differences between them (changed values, c
 [![Code Coverage](https://codecov.io/gh/AlexanderMac/o2diff/branch/master/graph/badge.svg)](https://codecov.io/gh/AlexanderMac/o2diff)
 [![npm version](https://badge.fury.io/js/o2diff.svg)](https://badge.fury.io/js/o2diff)
 
-## Features
+### Features
 - Three output formats:
   - `diff`: `{ left, right }` to get the objects differences.
   - `values`: `{ changed, added, deleted }`, to get the changed values.
@@ -14,13 +14,12 @@ Compares two objects and returns the differences between them (changed values, c
 - Revert function, to revert destination object to source object.
 - Converters for special types (ObjectId).
 
-## Commands
-```sh
-# Add to project
+### Install
+```bash
 $ npm i o2diff
 ```
 
-## Usage
+### Usage
 ```js
 const o2diff = require('o2diff')
 
@@ -55,49 +54,49 @@ o2diff.diffValues(original, current) // returns { changed, added, deleted } with
 o2diff.diffPaths(original, current)  // returns { changed, added, deleted } with paths diff
 ```
 
-## API
+### API
 
-### diff(original, current)
+##### diff(original, current)
 Returns the differences between `original` and `current`.
 
   - `original` - the original object.
   - `current` - the current (actual) object.
   - returns `{ left, right }` object.
 
-### diffValues(original, current)
+##### diffValues(original, current)
 Returns the added, changed and deleted values between `original` and `current`.
 
   - `original` - the original object.
   - `current` - the current (actual) object.
   - returns `{ changed, added, deleted }` object.
 
-### diffPaths(original, current)
+##### diffPaths(original, current)
 Returns the added, changed and deleted paths between `original` and `current`.
 
   - `original` - the original object.
   - `current` - the current (actual) object.
   - returns `{ changed, added, deleted }` object.
 
-### revert(dest, src, customizer)
+##### revert(dest, src, customizer)
 Reverts `dest` object to `src`, calls `customizer` for each `dest.path`.
 
   - `dest` - the destination object.
   - `src` - the source object.
   - `customizer` - the function that is called for each `dest.path`.
 
-### getPaths(obj)
+##### getPaths(obj)
 Returns all the paths of the object.
 
   - `obj` - the object.
 
-### omitPaths(obj, excludedPaths)
+##### omitPaths(obj, excludedPaths)
 Returns the object without `excludedPaths`.
 
   - `obj` - the object.
   - `excludedPaths` - the array of paths to exclude. The path can be with mask: `*.name` or `name.*` to exclude only path started or ended with the name.
 
-## Author
-Alexander Mac
-
-## Licence
+### Licence
 Licensed under the MIT license.
+
+### Author
+Alexander Mac
