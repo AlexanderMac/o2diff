@@ -2,201 +2,215 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('lodash')) :
 	typeof define === 'function' && define.amd ? define(['lodash'], factory) :
 	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.httpZ = factory(global._));
-}(this, (function (_) { 'use strict';
+})(this, (function (require$$0) { 'use strict';
 
 	function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-	var ___default = /*#__PURE__*/_interopDefaultLegacy(_);
+	var require$$0__default = /*#__PURE__*/_interopDefaultLegacy(require$$0);
 
-	function createCommonjsModule(fn) {
-	  var module = { exports: {} };
-		return fn(module, module.exports), module.exports;
+	function getDefaultExportFromCjs (x) {
+		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 	}
 
-	var utils = createCommonjsModule(function (module, exports) {
-	// TODO: test it
-	exports.getObjectPaths = (obj, curPath = '', isArray = false) => {
-	  let paths = [];
-	  ___default['default'].each(obj, (val, key) => {
-	    val = exports.convertSpecial(val);
-	    let newPath = isArray ? `${curPath}[${key}]` : `${curPath}.${key}`;
-	    if (exports.isSimplePrimitive(val)) {
-	      paths.push(newPath);
-	    } else if (___default['default'].isArray(val)) {
-	      paths = paths.concat(exports.getObjectPaths(val, newPath, true));
-	    } else {
-	      paths = paths.concat(exports.getObjectPaths(val, newPath));
-	    }
-	  });
-	  if (!curPath) {
-	    paths = ___default['default'].map(paths, path => ___default['default'].trimStart(path, '.'));
-	  }
-	  return paths
-	};
+	var o2diff = {exports: {}};
 
-	// TODO: test it
-	exports.getObjectsDiff = (left, right) => {
-	  let leftPaths = exports.getObjectPaths(left);
+	var src = {};
 
-	  return ___default['default'].reduce(leftPaths, (result, path) => {
-	    let leftVal = exports.convertSpecial(___default['default'].get(left, path));
-	    let rightVal = exports.convertSpecial(___default['default'].get(right, path));
-	    if (!___default['default'].isEqual(leftVal, rightVal)) {
-	      ___default['default'].set(result.values, path, leftVal);
-	      result.paths.push(path);
-	    }
-	    return result
-	  }, {
-	    values: {},
-	    paths: []
-	  })
-	};
+	var utils = {};
 
-	// TODO: test it
-	exports.getObjectValues = (obj, paths) => {
-	  let values = ___default['default'].reduce(paths, (result, path) => {
-	    let val = exports.convertSpecial(___default['default'].get(obj, path));
-	    ___default['default'].set(result, path, val);
-	    return result
-	  }, {});
-	  return exports.compact(values)
-	};
+	(function (exports) {
+		const _ = require$$0__default["default"];
 
-	// TODO: test it
-	exports.isSimplePrimitive = (val) => {
-	  return ___default['default'].isNil(val) ||
-	         ___default['default'].isBoolean(val) ||
-	         ___default['default'].isNumber(val) ||
-	         ___default['default'].isString(val) ||
-	         ___default['default'].isDate(val) ||
-	         ___default['default'].isSymbol(val) ||
-	         ___default['default'].isRegExp(val)
-	};
+		// TODO: test it
+		exports.getObjectPaths = (obj, curPath = '', isArray = false) => {
+		  let paths = [];
+		  _.each(obj, (val, key) => {
+		    val = exports.convertSpecial(val);
+		    let newPath = isArray ? `${curPath}[${key}]` : `${curPath}.${key}`;
+		    if (exports.isSimplePrimitive(val)) {
+		      paths.push(newPath);
+		    } else if (_.isArray(val)) {
+		      paths = paths.concat(exports.getObjectPaths(val, newPath, true));
+		    } else {
+		      paths = paths.concat(exports.getObjectPaths(val, newPath));
+		    }
+		  });
+		  if (!curPath) {
+		    paths = _.map(paths, path => _.trimStart(path, '.'));
+		  }
+		  return paths
+		};
 
-	exports.convertSpecial = (val) => {
-	  if (val && val.constructor.name === 'ObjectID') {
-	    return val.toString()
-	  }
-	  return val
-	};
+		// TODO: test it
+		exports.getObjectsDiff = (left, right) => {
+		  let leftPaths = exports.getObjectPaths(left);
 
-	exports.compact = (obj) => {
-	  obj = exports.convertSpecial(obj);
-	  if (exports.isSimplePrimitive(obj)) {
-	    return obj
-	  }
-	  if (___default['default'].isArray(obj)) {
-	    return ___default['default'].compact(obj)
-	  }
+		  return _.reduce(leftPaths, (result, path) => {
+		    let leftVal = exports.convertSpecial(_.get(left, path));
+		    let rightVal = exports.convertSpecial(_.get(right, path));
+		    if (!_.isEqual(leftVal, rightVal)) {
+		      _.set(result.values, path, leftVal);
+		      result.paths.push(path);
+		    }
+		    return result
+		  }, {
+		    values: {},
+		    paths: []
+		  })
+		};
 
-	  let result = {};
-	  ___default['default'].each(obj, (objItem, objKey) => {
-	    objItem = exports.convertSpecial(objItem);
-	    if (exports.isSimplePrimitive(objItem)) {
-	      result[objKey] = objItem;
-	    } else if (___default['default'].isArray(objItem)) {
-	      result[objKey] = ___default['default'].filter(objItem, v => !___default['default'].isNil(v));
-	      ___default['default'].each(result[objKey], (arrItem, arrIndex) => {
-	        result[objKey][arrIndex] = exports.compact(arrItem);
-	      });
-	    } else {
-	      result[objKey] = exports.compact(objItem);
-	    }
-	  });
-	  return result
-	};
+		// TODO: test it
+		exports.getObjectValues = (obj, paths) => {
+		  let values = _.reduce(paths, (result, path) => {
+		    let val = exports.convertSpecial(_.get(obj, path));
+		    _.set(result, path, val);
+		    return result
+		  }, {});
+		  return exports.compact(values)
+		};
 
-	// TODO: test it
-	exports.getError = (msg) => {
-	  let err = new Error(msg);
-	  err.type = 'O2DiffError';
-	  return err
-	};
-	});
+		// TODO: test it
+		exports.isSimplePrimitive = (val) => {
+		  return _.isNil(val) ||
+		         _.isBoolean(val) ||
+		         _.isNumber(val) ||
+		         _.isString(val) ||
+		         _.isDate(val) ||
+		         _.isSymbol(val) ||
+		         _.isRegExp(val)
+		};
 
-	var src = createCommonjsModule(function (module, exports) {
-	exports.diff = (original, current) => {
-	  let { addedAndChanged, deletedAndChanged } = _getPaths(original, current);
+		exports.convertSpecial = (val) => {
+		  if (val && val.constructor.name === 'ObjectID') {
+		    return val.toString()
+		  }
+		  return val
+		};
 
-	  return {
-	    left: utils.compact(deletedAndChanged.values),
-	    right: utils.compact(addedAndChanged.values)
-	  }
-	};
+		exports.compact = (obj) => {
+		  obj = exports.convertSpecial(obj);
+		  if (exports.isSimplePrimitive(obj)) {
+		    return obj
+		  }
+		  if (_.isArray(obj)) {
+		    return _.compact(obj)
+		  }
 
-	exports.diffValues = (original, current) => {
-	  let { changedPaths, addedPaths, deletedPaths } = _getPaths(original, current);
+		  let result = {};
+		  _.each(obj, (objItem, objKey) => {
+		    objItem = exports.convertSpecial(objItem);
+		    if (exports.isSimplePrimitive(objItem)) {
+		      result[objKey] = objItem;
+		    } else if (_.isArray(objItem)) {
+		      result[objKey] = _.filter(objItem, v => !_.isNil(v));
+		      _.each(result[objKey], (arrItem, arrIndex) => {
+		        result[objKey][arrIndex] = exports.compact(arrItem);
+		      });
+		    } else {
+		      result[objKey] = exports.compact(objItem);
+		    }
+		  });
+		  return result
+		};
 
-	  return {
-	    changed: utils.getObjectValues(current, changedPaths),
-	    added: utils.getObjectValues(current, addedPaths),
-	    deleted: utils.getObjectValues(original, deletedPaths)
-	  }
-	};
+		// TODO: test it
+		exports.getError = (msg) => {
+		  let err = new Error(msg);
+		  err.type = 'O2DiffError';
+		  return err
+		};
+	} (utils));
 
-	exports.diffPaths = (original, current) => {
-	  let { changedPaths, addedPaths, deletedPaths } = _getPaths(original, current);
+	(function (exports) {
+		const _ = require$$0__default["default"];
+		const utils$1 = utils;
 
-	  return {
-	    changed: changedPaths,
-	    added: addedPaths,
-	    deleted: deletedPaths
-	  }
-	};
+		exports.diff = (original, current) => {
+		  let { addedAndChanged, deletedAndChanged } = _getPaths(original, current);
 
-	exports.revert = (dest, src, customizer) => {
-	  let srcPaths = utils.getObjectPaths(src, '', ___default['default'].isArray(src));
-	  return ___default['default'].reduce(srcPaths, (result, path) => {
-	    let destValue = ___default['default'].get(dest, path);
-	    let srcValue = ___default['default'].get(src, path);
-	    let value = customizer(destValue, srcValue);
-	    ___default['default'].set(result, path, value);
-	    return result
-	  }, {})
-	};
+		  return {
+		    left: utils$1.compact(deletedAndChanged.values),
+		    right: utils$1.compact(addedAndChanged.values)
+		  }
+		};
 
-	exports.getPaths = (obj) => {
-	  return utils.getObjectPaths(obj, '', ___default['default'].isArray(obj))
-	};
+		exports.diffValues = (original, current) => {
+		  let { changedPaths, addedPaths, deletedPaths } = _getPaths(original, current);
 
-	exports.omitPaths = (obj, excludedPaths) => {
-	  let includedPaths = exports.getPaths(obj);
-	  includedPaths = ___default['default'].filter(includedPaths, path => {
-	    let isIgnored = ___default['default'].some(excludedPaths, ignoredPath => {
-	      if (___default['default'].startsWith(ignoredPath, '*.')) {
-	        return ___default['default'].endsWith(path, ___default['default'].trimStart(ignoredPath, '*.'))
-	      }
-	      if (___default['default'].endsWith(ignoredPath, '.*')) {
-	        return ___default['default'].startsWith(path, ___default['default'].trimEnd(ignoredPath, '.*'))
-	      }
-	      return ignoredPath === path
-	    });
-	    return !isIgnored
-	  });
+		  return {
+		    changed: utils$1.getObjectValues(current, changedPaths),
+		    added: utils$1.getObjectValues(current, addedPaths),
+		    deleted: utils$1.getObjectValues(original, deletedPaths)
+		  }
+		};
 
-	  return utils.getObjectValues(obj, includedPaths)
-	};
+		exports.diffPaths = (original, current) => {
+		  let { changedPaths, addedPaths, deletedPaths } = _getPaths(original, current);
 
-	function _getPaths(original, current) {
-	  let addedAndChanged = utils.getObjectsDiff(current, original);
-	  let deletedAndChanged = utils.getObjectsDiff(original, current);
+		  return {
+		    changed: changedPaths,
+		    added: addedPaths,
+		    deleted: deletedPaths
+		  }
+		};
 
-	  let changedPaths = ___default['default'].intersection(addedAndChanged.paths, deletedAndChanged.paths);
-	  let addedPaths = ___default['default'].difference(addedAndChanged.paths, changedPaths);
-	  let deletedPaths = ___default['default'].difference(deletedAndChanged.paths, changedPaths);
+		exports.revert = (dest, src, customizer) => {
+		  let srcPaths = utils$1.getObjectPaths(src, '', _.isArray(src));
+		  return _.reduce(srcPaths, (result, path) => {
+		    let destValue = _.get(dest, path);
+		    let srcValue = _.get(src, path);
+		    let value = customizer(destValue, srcValue);
+		    _.set(result, path, value);
+		    return result
+		  }, {})
+		};
 
-	  return {
-	    addedAndChanged,
-	    deletedAndChanged,
-	    changedPaths,
-	    addedPaths,
-	    deletedPaths
-	  }
-	}
-	});
+		exports.getPaths = (obj) => {
+		  return utils$1.getObjectPaths(obj, '', _.isArray(obj))
+		};
 
-	var o2diff = src;
+		exports.omitPaths = (obj, excludedPaths) => {
+		  let includedPaths = exports.getPaths(obj);
+		  includedPaths = _.filter(includedPaths, path => {
+		    let isIgnored = _.some(excludedPaths, ignoredPath => {
+		      if (_.startsWith(ignoredPath, '*.')) {
+		        return _.endsWith(path, _.trimStart(ignoredPath, '*.'))
+		      }
+		      if (_.endsWith(ignoredPath, '.*')) {
+		        return _.startsWith(path, _.trimEnd(ignoredPath, '.*'))
+		      }
+		      return ignoredPath === path
+		    });
+		    return !isIgnored
+		  });
 
-	return o2diff;
+		  return utils$1.getObjectValues(obj, includedPaths)
+		};
 
-})));
+		function _getPaths(original, current) {
+		  let addedAndChanged = utils$1.getObjectsDiff(current, original);
+		  let deletedAndChanged = utils$1.getObjectsDiff(original, current);
+
+		  let changedPaths = _.intersection(addedAndChanged.paths, deletedAndChanged.paths);
+		  let addedPaths = _.difference(addedAndChanged.paths, changedPaths);
+		  let deletedPaths = _.difference(deletedAndChanged.paths, changedPaths);
+
+		  return {
+		    addedAndChanged,
+		    deletedAndChanged,
+		    changedPaths,
+		    addedPaths,
+		    deletedPaths
+		  }
+		}
+	} (src));
+
+	(function (module) {
+		module.exports = src;
+	} (o2diff));
+
+	var index = /*@__PURE__*/getDefaultExportFromCjs(o2diff.exports);
+
+	return index;
+
+}));

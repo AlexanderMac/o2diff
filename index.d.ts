@@ -15,7 +15,7 @@ interface DiffPathsResult {
   deleted: string[];
 }
 
-type ObjectOrArray = Object | Array;
+type ObjectOrArray = Object | Array<any>;
 
 export function diff(original: ObjectOrArray, current: ObjectOrArray): DiffResult;
 export function diffValues(original: ObjectOrArray, current: ObjectOrArray): DiffValuesResult;

@@ -43,10 +43,10 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-commonjs": "^22.0.1",
     "@rollup/plugin-node-resolve": "^13.0.0",
-    "eslint": "^7.27.0",
-    "mocha": "^8.4.0",
+    "eslint": "^8.19.0",
+    "mocha": "^10.0.0",
     "nyc": "^15.0.1",
     "rollup": "^2.3.3",
     "should": "^13.2.3"
