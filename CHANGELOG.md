@@ -1,3 +1,8 @@
+# <sub>v3.0.0</sub>
+#### _Jul. 4, 2022_
+  * Drop support for Node versions prior to v14.
+  * Update dependecies.
+
 # <sub>v2.0.0</sub>
 #### _Feb. 26, 2021_
   * Drop support for Node versions prior to v12.

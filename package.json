@@ -1,6 +1,6 @@
 {
   "name": "o2diff",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Compares two objects and returns the difference between them",
   "main": "index.js",
   "module": "index.esm.js",
