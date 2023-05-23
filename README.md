@@ -1,9 +1,10 @@
 # o2diff
 
-Compares two objects and returns the differences between them (changed values, changed paths, differences).
+Returns the differences between two objects (changed values, changed paths, differences).
 
 [![Build Status](https://github.com/AlexanderMac/o2diff/workflows/CI/badge.svg)](https://github.com/AlexanderMac/o2diff/actions?query=workflow%3ACI)
 [![Code Coverage](https://codecov.io/gh/AlexanderMac/o2diff/branch/master/graph/badge.svg)](https://codecov.io/gh/AlexanderMac/o2diff)
+[![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![npm version](https://badge.fury.io/js/o2diff.svg)](https://badge.fury.io/js/o2diff)
 
 ### Features
@@ -95,7 +96,7 @@ Returns the object without `excludedPaths`.
   - `obj` - the object.
   - `excludedPaths` - the array of paths to exclude. The path can be with mask: `*.name` or `name.*` to exclude only path started or ended with the name.
 
-### Licence
+### License
 Licensed under the MIT license.
 
 ### Author

@@ -1,0 +1,6 @@
+{
+  "(database|libs|src|test)/**/*.ts": [
+    "prettier --write",
+    "eslint --fix"
+  ]
+}
