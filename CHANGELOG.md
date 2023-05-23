@@ -1,12 +1,18 @@
+# <sub>v4.0.1</sub>
+#### _May. 23, 2023_
+  * Drop support for Node versions prior to v16.
+  * Update dependencies.
+  * Convert codebase to Typescript.
+
 # <sub>v3.0.0</sub>
 #### _Jul. 4, 2022_
   * Drop support for Node versions prior to v14.
-  * Update dependecies.
+  * Update dependencies.
 
 # <sub>v2.0.0</sub>
 #### _Feb. 26, 2021_
   * Drop support for Node versions prior to v12.
-  * Update dependecies.
+  * Update dependencies.
 
 # <sub>v1.2.0</sub>
 #### _Apr. 6, 2020_
