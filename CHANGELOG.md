@@ -1,3 +1,7 @@
+# <sub>v4.0.2</sub>
+#### _Sep. 3-, 2023_
+  * Update dependencies.
+
 # <sub>v4.0.1</sub>
 #### _May. 23, 2023_
   * Drop support for Node versions prior to v16.
