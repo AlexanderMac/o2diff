@@ -1,11 +1,13 @@
-# o2diff
-
-Compares two objects and returns the differences between them (changed values, changed paths, differences).
-
-[![Build Status](https://github.com/AlexanderMac/o2diff/workflows/CI/badge.svg)](https://github.com/AlexanderMac/o2diff/actions?query=workflow%3ACI)
-[![Code Coverage](https://codecov.io/gh/AlexanderMac/o2diff/branch/master/graph/badge.svg)](https://codecov.io/gh/AlexanderMac/o2diff)
-[![MIT license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-[![npm version](https://badge.fury.io/js/o2diff.svg)](https://badge.fury.io/js/o2diff)
+<p align="center">
+  <h1 align="center">o2diff</h1>
+  <p align="center">Compares two objects and returns the differences between them (changed values, changed paths, differences).</p>
+  <p align="center">
+    <a href="https://github.com/alexandermac/o2diff/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://github.com/alexandermac/o2diff/actions/workflows/ci.yml/badge.svg" alt="Build Status"></a>
+    <a href="https://codecov.io/gh/AlexanderMac/o2diff"><img src="https://codecov.io/gh/AlexanderMac/o2diff/branch/master/graph/badge.svg" alt="Code Coverage"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/github/license/alexandermac/o2diff.svg" alt="License"></a>
+    <a href="https://badge.fury.io/js/o2diff"><img src="https://badge.fury.io/js/o2diff.svg" alt="npm version"></a>
+  </p>
+</p>
 
 ### Features
 - Provides three outputs:
