@@ -1,49 +1,127 @@
 'use strict';
 
-var __createBinding = (undefined && undefined.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
+var _ = require('lodash');
+
+function _interopNamespaceDefault(e) {
+    var n = Object.create(null);
+    if (e) {
+        Object.keys(e).forEach(function (k) {
+            if (k !== 'default') {
+                var d = Object.getOwnPropertyDescriptor(e, k);
+                Object.defineProperty(n, k, d.get ? d : {
+                    enumerable: true,
+                    get: function () { return e[k]; }
+                });
+            }
+        });
     }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (undefined && undefined.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (undefined && undefined.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
+    n.default = e;
+    return Object.freeze(n);
+}
+
+var ___namespace = /*#__PURE__*/_interopNamespaceDefault(_);
+
+function getObjectPaths(obj, curPath = '', isArray = false) {
+    let paths = [];
+    ___namespace.each(obj, (val, key) => {
+        val = convertSpecial(val);
+        const newPath = isArray ? `${curPath}[${key}]` : `${curPath}.${key}`;
+        if (isSimplePrimitive(val)) {
+            paths.push(newPath);
+        }
+        else if (___namespace.isArray(val)) {
+            paths = paths.concat(getObjectPaths(val, newPath, true));
+        }
+        else {
+            paths = paths.concat(getObjectPaths(val, newPath));
+        }
+    });
+    if (!curPath) {
+        paths = paths.map((path) => ___namespace.trimStart(path, '.'));
+    }
+    return paths;
+}
+function getObjectsDiff(left, right) {
+    const leftPaths = getObjectPaths(left);
+    const reducer = {
+        values: {},
+        paths: [],
+    };
+    return leftPaths.reduce((result, path) => {
+        const leftVal = convertSpecial(___namespace.get(left, path));
+        const rightVal = convertSpecial(___namespace.get(right, path));
+        if (!___namespace.isEqual(leftVal, rightVal)) {
+            ___namespace.set(result.values, path, leftVal);
+            result.paths.push(path);
+        }
+        return result;
+    }, reducer);
+}
+function getObjectValues(obj, paths) {
+    const values = paths.reduce((result, path) => {
+        const val = convertSpecial(___namespace.get(obj, path));
+        ___namespace.set(result, path, val);
+        return result;
+    }, {});
+    return compact(values);
+}
+function isSimplePrimitive(val) {
+    return (___namespace.isNil(val) ||
+        ___namespace.isBoolean(val) ||
+        ___namespace.isNumber(val) ||
+        ___namespace.isString(val) ||
+        ___namespace.isDate(val) ||
+        ___namespace.isSymbol(val) ||
+        ___namespace.isRegExp(val));
+}
+function convertSpecial(val) {
+    if (val && val.constructor.name === 'ObjectID') {
+        return val.toString();
+    }
+    return val;
+}
+function compact(obj) {
+    obj = convertSpecial(obj);
+    if (isSimplePrimitive(obj)) {
+        return obj;
+    }
+    if (___namespace.isArray(obj)) {
+        return ___namespace.compact(obj);
+    }
+    const result = {};
+    ___namespace.each(obj, (objItem, objKey) => {
+        objItem = convertSpecial(objItem);
+        if (isSimplePrimitive(objItem)) {
+            result[objKey] = objItem;
+        }
+        else if (___namespace.isArray(objItem)) {
+            result[objKey] = ___namespace.filter(objItem, (v) => !___namespace.isNil(v));
+            ___namespace.each(result[objKey], (arrItem, arrIndex) => {
+                result[objKey][arrIndex] = compact(arrItem);
+            });
+        }
+        else {
+            result[objKey] = compact(objItem);
+        }
+    });
     return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.omitPaths = exports.getPaths = exports.revert = exports.diffPaths = exports.diffValues = exports.diff = void 0;
-const _ = __importStar(require("lodash"));
-const utils_1 = require("./utils");
+}
+
 function diff(original, current) {
     const { addedAndChanged, deletedAndChanged } = _getPaths(original, current);
     return {
-        left: (0, utils_1.compact)(deletedAndChanged.values),
-        right: (0, utils_1.compact)(addedAndChanged.values),
+        left: compact(deletedAndChanged.values),
+        right: compact(addedAndChanged.values),
     };
 }
-exports.diff = diff;
 function diffValues(original, current) {
     const { changedPaths, addedPaths, deletedPaths } = _getPaths(original, current);
     return {
-        changed: (0, utils_1.getObjectValues)(current, changedPaths),
-        added: (0, utils_1.getObjectValues)(current, addedPaths),
-        deleted: (0, utils_1.getObjectValues)(original, deletedPaths),
+        changed: getObjectValues(current, changedPaths),
+        added: getObjectValues(current, addedPaths),
+        deleted: getObjectValues(original, deletedPaths),
     };
 }
-exports.diffValues = diffValues;
 function diffPaths(original, current) {
     const { changedPaths, addedPaths, deletedPaths } = _getPaths(original, current);
     return {
@@ -52,44 +130,40 @@ function diffPaths(original, current) {
         deleted: deletedPaths,
     };
 }
-exports.diffPaths = diffPaths;
 function revert(dest, src, customizer) {
-    const srcPaths = (0, utils_1.getObjectPaths)(src, '', _.isArray(src));
+    const srcPaths = getObjectPaths(src, '', ___namespace.isArray(src));
     return srcPaths.reduce((result, path) => {
-        const destValue = _.get(dest, path);
-        const srcValue = _.get(src, path);
+        const destValue = ___namespace.get(dest, path);
+        const srcValue = ___namespace.get(src, path);
         const value = customizer(destValue, srcValue);
-        _.set(result, path, value);
+        ___namespace.set(result, path, value);
         return result;
     }, {});
 }
-exports.revert = revert;
 function getPaths(obj) {
-    return (0, utils_1.getObjectPaths)(obj, '', _.isArray(obj));
+    return getObjectPaths(obj, '', ___namespace.isArray(obj));
 }
-exports.getPaths = getPaths;
 function omitPaths(obj, excludedPaths) {
     const includedPaths = getPaths(obj).filter((path) => {
         const isIgnored = excludedPaths.some((ignoredPath) => {
-            if (_.startsWith(ignoredPath, '*.')) {
-                return _.endsWith(path, _.trimStart(ignoredPath, '*.'));
+            if (___namespace.startsWith(ignoredPath, '*.')) {
+                return ___namespace.endsWith(path, ___namespace.trimStart(ignoredPath, '*.'));
             }
-            if (_.endsWith(ignoredPath, '.*')) {
-                return _.startsWith(path, _.trimEnd(ignoredPath, '.*'));
+            if (___namespace.endsWith(ignoredPath, '.*')) {
+                return ___namespace.startsWith(path, ___namespace.trimEnd(ignoredPath, '.*'));
             }
             return ignoredPath === path;
         });
         return !isIgnored;
     });
-    return (0, utils_1.getObjectValues)(obj, includedPaths);
+    return getObjectValues(obj, includedPaths);
 }
-exports.omitPaths = omitPaths;
 function _getPaths(original, current) {
-    const addedAndChanged = (0, utils_1.getObjectsDiff)(current, original);
-    const deletedAndChanged = (0, utils_1.getObjectsDiff)(original, current);
-    const changedPaths = _.intersection(addedAndChanged.paths, deletedAndChanged.paths);
-    const addedPaths = _.difference(addedAndChanged.paths, changedPaths);
-    const deletedPaths = _.difference(deletedAndChanged.paths, changedPaths);
+    const addedAndChanged = getObjectsDiff(current, original);
+    const deletedAndChanged = getObjectsDiff(original, current);
+    const changedPaths = ___namespace.intersection(addedAndChanged.paths, deletedAndChanged.paths);
+    const addedPaths = ___namespace.difference(addedAndChanged.paths, changedPaths);
+    const deletedPaths = ___namespace.difference(deletedAndChanged.paths, changedPaths);
     return {
         addedAndChanged,
         deletedAndChanged,
@@ -98,3 +172,10 @@ function _getPaths(original, current) {
         deletedPaths,
     };
 }
+
+exports.diff = diff;
+exports.diffPaths = diffPaths;
+exports.diffValues = diffValues;
+exports.getPaths = getPaths;
+exports.omitPaths = omitPaths;
+exports.revert = revert;
