@@ -19,7 +19,7 @@
     "prepublish": "pnpm build",
     "start": "ts-node-dev --rs --cls ./index.ts",
     "clean": "rm -rf ./build ./dist",
-    "build": "pnpm clean && pnpm build:tsc && pnpm build:dist",
+    "build": "pnpm clean && pnpm build:tsc && pnpm build:dist && cp dist/index.umd.js docs/o2diff.js",
     "build:tsc": "pnpm tsc --project tsconfig.dist.json",
     "build:dist": "pnpm rollup -c",
     "prettify": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
