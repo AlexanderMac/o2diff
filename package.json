@@ -1,6 +1,6 @@
 {
   "name": "o2diff",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Returns the difference between two objects",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",

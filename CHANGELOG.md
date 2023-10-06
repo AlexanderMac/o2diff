@@ -1,22 +1,31 @@
+# <sub>v4.0.3</sub>
+#### _Oct. 6-, 2023_
+  * Rewrite the build logic, integrate rollup and create bundles for different consumers.
+  * Upgrade dependencies.
+
 # <sub>v4.0.2</sub>
 #### _Sep. 3-, 2023_
-  * Update dependencies.
+  * Upgrade dependencies.
+
+# <sub>v4.0.2</sub>
+#### _Sep. 3-, 2023_
+  * Upgrade dependencies.
 
 # <sub>v4.0.1</sub>
 #### _May. 23, 2023_
   * Drop support for Node versions prior to v16.
-  * Update dependencies.
+  * Upgrade dependencies.
   * Convert codebase to Typescript.
 
 # <sub>v3.0.0</sub>
 #### _Jul. 4, 2022_
   * Drop support for Node versions prior to v14.
-  * Update dependencies.
+  * Upgrade dependencies.
 
 # <sub>v2.0.0</sub>
 #### _Feb. 26, 2021_
   * Drop support for Node versions prior to v12.
-  * Update dependencies.
+  * Upgrade dependencies.
 
 # <sub>v1.2.0</sub>
 #### _Apr. 6, 2020_
