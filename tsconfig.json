@@ -5,7 +5,7 @@
     "removeComments": true,
     "resolveJsonModule": true,
     "target": "es2020",
-    "outDir": "./dist/",
+    "outDir": "./build/",
     "sourceMap": true,
     "allowJs": true,
     "skipLibCheck": true,
@@ -16,6 +16,5 @@
   "include": [
     "src/**/*.ts",
     "test/**/*.ts"
-  ],
-  "exclude": ["node_modules"]
+  ]
 }

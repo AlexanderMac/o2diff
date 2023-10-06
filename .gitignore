@@ -16,7 +16,7 @@ coverage
 .nyc_output
 
 # Compiled
-build/Release
+build
 
 # Dependency directory
 node_modules

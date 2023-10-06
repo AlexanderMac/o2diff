@@ -40,6 +40,6 @@ jobs:
       - name: Run tests
         run: npm test
       - name: Code coverage
-        run: pnpm coverage-gh
+        run: pnpm coverage:codecov
       - name: Upload coverage reports
         uses: codecov/codecov-action@v3

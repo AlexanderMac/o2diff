@@ -2,7 +2,9 @@
   "name": "o2diff",
   "version": "4.0.2",
   "description": "Returns the difference between two objects",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "browser": "dist/index.umd.js",
   "typings": "index.d.ts",
   "files": [
     "dist",
@@ -16,14 +18,16 @@
     "prepare": "husky install",
     "prepublish": "pnpm build",
     "start": "ts-node-dev --rs --cls ./index.ts",
-    "clean": "rm -rf ./dist",
-    "build": "pnpm clean && pnpm tsc --project tsconfig.dist.json && cp package.json dist/package.json",
+    "clean": "rm -rf ./build ./dist",
+    "build": "pnpm clean && pnpm build:tsc && pnpm build:dist",
+    "build:tsc": "pnpm tsc --project tsconfig.dist.json",
+    "build:dist": "pnpm rollup -c",
     "prettify": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "format": "pnpm lint && pnpm prettify",
     "lint": "eslint ./src ./test --ext .ts --fix",
     "test": "NODE_ENV=test mocha",
     "coverage": "nyc npm test",
-    "coverage-gh": "nyc --reporter=lcov npm test && codecov"
+    "coverage:codecov": "nyc --reporter=lcov npm test && codecov"
   },
   "repository": {
     "type": "git",
@@ -46,11 +50,13 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.5",
+    "@rollup/plugin-node-resolve": "^15.2.2",
     "@types/lodash": "^4.14.199",
     "@types/mocha": "^10.0.2",
-    "@types/node": "^20.7.2",
-    "@typescript-eslint/eslint-plugin": "^6.7.3",
-    "@typescript-eslint/parser": "^6.7.3",
+    "@types/node": "^20.8.2",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
     "eslint": "^8.50.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "husky": "^8.0.3",
@@ -58,6 +64,7 @@
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
     "prettier": "^3.0.3",
+    "rollup": "^4.0.2",
     "should": "^13.2.3",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
