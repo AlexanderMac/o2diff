@@ -1,6 +1,7 @@
 <p align="center">
   <h1 align="center">o2diff</h1>
   <p align="center">Compares two objects and returns the differences between them if different formats: changed values, changed paths, differences.</p>
+  <p align="center">Works in Node.js and in the browser.</p>
   <p align="center">
     <a href="https://github.com/alexandermac/o2diff/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://github.com/alexandermac/o2diff/actions/workflows/ci.yml/badge.svg" alt="Build Status"></a>
     <a href="https://codecov.io/gh/AlexanderMac/o2diff"><img src="https://codecov.io/gh/AlexanderMac/o2diff/branch/master/graph/badge.svg" alt="Code Coverage"></a>
