@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import should from 'should'
 
-import * as o2diff from '../../src'
+import * as o2diff from '../../src/index'
 import { getObjectID } from './test-utils'
 
 describe('o2diff / main', () => {

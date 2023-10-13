@@ -25,7 +25,7 @@
     "prettify": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "format": "pnpm lint && pnpm prettify",
     "lint": "eslint ./src ./test --ext .ts --fix",
-    "test": "NODE_ENV=test mocha",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' NODE_ENV=test mocha",
     "coverage": "nyc npm test",
     "coverage:codecov": "nyc --reporter=lcov npm test && codecov"
   },
