@@ -9,13 +9,21 @@ npm-debug.log
 # Coverage directory used by tools like istanbul
 coverage
 .nyc_output
+.angular
+
+# Compiled
+build/Release
+dist
 
 # Dependency directory
 node_modules
 
 # Users Environment Variables
+.lock-wscript
 .vscode
 .idea
 .brackets.json
 .jsbeautifyrc
+tsd.json
+typings
 .nvmrc
