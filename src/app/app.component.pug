@@ -1,0 +1,27 @@
+h1.text-center.mt-2 O2Diff demo
+div(style='position: absolute; right: 1em; top: 1.5em')
+  a(href='https://github.com/AlexanderMac/o2diff') GitHub Repo
+hr
+
+.container
+  .row
+    .col-lg-6
+      h3 Original Object
+      .cm(#original="")
+    .col-lg-6
+      h3 Current Object
+      .cm(#current="")
+
+  .row.mt-3
+    .col
+      button.btn.btn-outline-secondary.me-1('(click)'="diff('values')") Values Diff
+      button.btn.btn-outline-secondary.me-1('(click)'="diff('paths')") Paths Diff
+      button.btn.btn-outline-secondary.me-2('(click)'="diff('full')") Diff
+      span | {{ diffType }}
+      .cm(#changes="")
+
+  .row
+    .col
+      strong.me-1 Status:
+      span.text-success(*ngIf="inputSuccess") {{ inputSuccess }}
+      span.text-danger(*ngIf="inputError") {{ inputError }}
