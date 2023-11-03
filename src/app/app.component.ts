@@ -62,8 +62,8 @@ export class AppComponent implements AfterViewInit {
         break
     }
 
-    this._setCmEditorText(this.cmChangesEditor, this._stringifyJson(result))
     this.inputSuccess = 'Success'
+    this._setCmEditorText(this.cmChangesEditor, this._stringifyJson(result))
   }
 
   private _createCmEditor(nativeElement: any, isReadonly = false): EditorView {

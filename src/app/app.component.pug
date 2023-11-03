@@ -4,7 +4,7 @@ div(style='position: absolute; right: 1em; top: 1.5em')
 hr
 
 .container
-  .row
+  .row.mb-3
     .col-lg-6
       h3 Original Object
       .cm(#original="")
@@ -12,12 +12,18 @@ hr
       h3 Current Object
       .cm(#current="")
 
-  .row.mt-3
+  .row.mb-1
     .col
       button.btn.btn-outline-secondary.me-1('(click)'="diff('values')") Values Diff
       button.btn.btn-outline-secondary.me-1('(click)'="diff('paths')") Paths Diff
-      button.btn.btn-outline-secondary.me-2('(click)'="diff('full')") Diff
-      span | {{ diffType }}
+      button.btn.btn-outline-secondary.me-2('(click)'="diff('full')") Full Diff
+      span.me-1 |
+      strong('[ngSwitch]'="diffType")
+        span(*ngSwitchCase="'values'") Differences in values of two objects
+        span(*ngSwitchCase="'paths'") Differences in paths of two objects
+        span(*ngSwitchCase="'full'") All differences between two objects
+  .row.mb-3
+    .col
       .cm(#changes="")
 
   .row
