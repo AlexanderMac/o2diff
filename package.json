@@ -1,6 +1,6 @@
 {
   "name": "o2diff",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Returns the difference between two objects",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -19,7 +19,7 @@
     "prepublish": "pnpm build",
     "start": "ts-node-dev --rs --cls ./index.ts",
     "clean": "rm -rf ./build ./dist",
-    "build": "pnpm clean && pnpm build:tsc && pnpm build:dist && cp dist/index.umd.js docs/o2diff.js",
+    "build": "pnpm clean && pnpm build:tsc && pnpm build:dist",
     "build:tsc": "pnpm tsc --project tsconfig.dist.json",
     "build:dist": "pnpm rollup -c",
     "prettify": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

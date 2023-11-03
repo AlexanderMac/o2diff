@@ -1,14 +1,18 @@
+# <sub>v4.0.4</sub>
+#### _Nov. 3, 2023_
+  * Minor improvements.
+
 # <sub>v4.0.3</sub>
-#### _Oct. 6-, 2023_
+#### _Oct. 6, 2023_
   * Rewrite the build logic, integrate rollup and create bundles for different consumers.
   * Upgrade dependencies.
 
 # <sub>v4.0.2</sub>
-#### _Sep. 3-, 2023_
+#### _Sep. 3, 2023_
   * Upgrade dependencies.
 
 # <sub>v4.0.2</sub>
-#### _Sep. 3-, 2023_
+#### _Sep. 3, 2023_
   * Upgrade dependencies.
 
 # <sub>v4.0.1</sub>
