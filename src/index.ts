@@ -1,29 +1,23 @@
 import * as _ from 'lodash'
 
-import {
-  compact,
-  getObjectPaths,
-  getObjectsDiff,
-  getObjectValues,
-  Input,
-} from './utils'
+import { compact, getObjectPaths, getObjectsDiff, getObjectValues, Input } from './utils'
 
 export type DiffResult = {
-  left: Record<string, any>;
-  right: Record<string, any>;
-};
+  left: Record<string, any>
+  right: Record<string, any>
+}
 
 export type DiffValuesResult = {
-  changed: Record<string, any>;
-  added: Record<string, any>;
-  deleted: Record<string, any>;
-};
+  changed: Record<string, any>
+  added: Record<string, any>
+  deleted: Record<string, any>
+}
 
 export type DiffPathsResult = {
-  changed: string[];
-  added: string[];
-  deleted: string[];
-};
+  changed: string[]
+  added: string[]
+  deleted: string[]
+}
 
 export function diff(original: Input, current: Input): DiffResult {
   const { addedAndChanged, deletedAndChanged } = _getPaths(original, current)
@@ -35,10 +29,7 @@ export function diff(original: Input, current: Input): DiffResult {
 }
 
 export function diffValues(original: Input, current: Input): DiffValuesResult {
-  const { changedPaths, addedPaths, deletedPaths } = _getPaths(
-    original,
-    current,
-  )
+  const { changedPaths, addedPaths, deletedPaths } = _getPaths(original, current)
 
   return {
     changed: getObjectValues(current, changedPaths),
@@ -48,10 +39,7 @@ export function diffValues(original: Input, current: Input): DiffValuesResult {
 }
 
 export function diffPaths(original: Input, current: Input): DiffPathsResult {
-  const { changedPaths, addedPaths, deletedPaths } = _getPaths(
-    original,
-    current,
-  )
+  const { changedPaths, addedPaths, deletedPaths } = _getPaths(original, current)
 
   return {
     changed: changedPaths,
@@ -60,11 +48,7 @@ export function diffPaths(original: Input, current: Input): DiffPathsResult {
   }
 }
 
-export function revert(
-  dest: Input,
-  src: Input,
-  customizer: (d: any, s: any) => any,
-) {
+export function revert(dest: Input, src: Input, customizer: (d: any, s: any) => any) {
   const srcPaths = getObjectPaths(src, '', _.isArray(src))
   return srcPaths.reduce((result, path) => {
     const destValue = _.get(dest, path)
@@ -80,8 +64,8 @@ export function getPaths(obj: Input): string[] {
 }
 
 export function omitPaths(obj: Input, excludedPaths: string[]) {
-  const includedPaths = getPaths(obj).filter((path) => {
-    const isIgnored = excludedPaths.some((ignoredPath) => {
+  const includedPaths = getPaths(obj).filter(path => {
+    const isIgnored = excludedPaths.some(ignoredPath => {
       if (_.startsWith(ignoredPath, '*.')) {
         return _.endsWith(path, _.trimStart(ignoredPath, '*.'))
       }
@@ -100,10 +84,7 @@ function _getPaths(original: Input, current: Input) {
   const addedAndChanged = getObjectsDiff(current, original)
   const deletedAndChanged = getObjectsDiff(original, current)
 
-  const changedPaths = _.intersection(
-    addedAndChanged.paths,
-    deletedAndChanged.paths,
-  )
+  const changedPaths = _.intersection(addedAndChanged.paths, deletedAndChanged.paths)
   const addedPaths = _.difference(addedAndChanged.paths, changedPaths)
   const deletedPaths = _.difference(deletedAndChanged.paths, changedPaths)
 

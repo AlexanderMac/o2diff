@@ -8,5 +8,11 @@
   "trailingComma": "all",
   "bracketSpacing": true,
   "arrowParens": "avoid",
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrderParserPlugins" : ["typescript", "decorators-legacy"],
+  "importOrder": ["^[./]"],
+  "importOrderCaseInsensitive": true,
+  "importOrderSeparation": true
 }

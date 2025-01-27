@@ -1,6 +1,6 @@
 {
   "name": "o2diff",
-  "version": "4.0.4",
+  "version": "5.0.0",
   "description": "Returns the difference between two objects",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -11,11 +11,10 @@
     "index.d.ts"
   ],
   "engines": {
-    "node": ">=16",
-    "npm": ">=7"
+    "node": ">=18",
+    "npm": ">=9"
   },
   "scripts": {
-    "prepare": "husky install",
     "prepublish": "pnpm build",
     "start": "ts-node-dev --rs --cls ./index.ts",
     "clean": "rm -rf ./build ./dist",
@@ -24,10 +23,10 @@
     "build:dist": "pnpm rollup -c",
     "prettify": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "format": "pnpm lint && pnpm prettify",
-    "lint": "eslint ./src ./test --ext .ts --fix",
+    "lint": "eslint",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' NODE_ENV=test mocha",
-    "coverage": "nyc npm test",
-    "coverage:codecov": "nyc --reporter=lcov npm test && codecov"
+    "coverage": "nyc pnpm test",
+    "coverage:codecov": "nyc --reporter=lcov pnpm test"
   },
   "repository": {
     "type": "git",
@@ -45,28 +44,27 @@
   "bugs": {
     "url": "https://github.com/AlexanderMac/o2diff/issues"
   },
-  "homepage": "https://github.com/AlexanderMac/o2diff#readme",
+  "homepage": "https://github.com/AlexanderMac/o2diff",
   "dependencies": {
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.5",
-    "@rollup/plugin-node-resolve": "^15.2.2",
-    "@types/lodash": "^4.14.199",
-    "@types/mocha": "^10.0.2",
-    "@types/node": "^20.8.2",
-    "@typescript-eslint/eslint-plugin": "^6.7.4",
-    "@typescript-eslint/parser": "^6.7.4",
-    "eslint": "^8.50.0",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^14.0.1",
-    "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
-    "prettier": "^3.0.3",
-    "rollup": "^4.0.2",
+    "@eslint/js": "^9.19.0",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
+    "@types/lodash": "^4.17.14",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.10.10",
+    "eslint": "^9.19.0",
+    "globals": "^15.14.0",
+    "mocha": "^11.1.0",
+    "nyc": "^17.1.0",
+    "prettier": "^3.4.2",
+    "rollup": "^4.32.0",
     "should": "^13.2.3",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0"
   }
 }

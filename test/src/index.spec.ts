@@ -99,12 +99,7 @@ describe('o2diff / main', () => {
 
     describe('input(s) contain(s) special types', () => {
       it('should convert the special type (ObjectID) to string', () => {
-        const ids = [
-          getObjectID(),
-          getObjectID(100),
-          getObjectID(),
-          getObjectID(500),
-        ]
+        const ids = [getObjectID(), getObjectID(100), getObjectID(), getObjectID(500)]
         const original = {
           idOne: ids[0],
           idTwo: ids[1],
@@ -254,14 +249,7 @@ describe('o2diff / main', () => {
         const current = getCurrent()
 
         const expected = {
-          changed: [
-            'firstName',
-            'email',
-            'phones[1].type',
-            'phones[1].value',
-            'roles[0]',
-            'roles[1]',
-          ],
+          changed: ['firstName', 'email', 'phones[1].type', 'phones[1].value', 'roles[0]', 'roles[1]'],
           added: [
             'age',
             'phones[2].type',
@@ -327,17 +315,7 @@ describe('o2diff / main', () => {
         },
         c: [{ ca: 1, cb: [1, 2] }, 3],
       }
-      const expected = [
-        'a',
-        'b.ba',
-        'b.bc[0]',
-        'b.bc[1]',
-        'b.bc[2]',
-        'c[0].ca',
-        'c[0].cb[0]',
-        'c[0].cb[1]',
-        'c[1]',
-      ]
+      const expected = ['a', 'b.ba', 'b.bc[0]', 'b.bc[1]', 'b.bc[2]', 'c[0].ca', 'c[0].cb[0]', 'c[0].cb[1]', 'c[1]']
 
       const actual = o2diff.getPaths(obj)
       should(actual).eql(expected)

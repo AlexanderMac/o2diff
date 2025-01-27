@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 
-export type Input = Record<string, any> | Array<any> | null;
+export type Input = Record<string, any> | Array<any> | null
 
 // TODO: test it
 export function getObjectPaths(obj: Input, curPath = '', isArray = false) {
@@ -13,12 +13,12 @@ export function getObjectPaths(obj: Input, curPath = '', isArray = false) {
     } else if (_.isArray(val)) {
       paths = paths.concat(getObjectPaths(val, newPath, true))
     } else {
-      paths = paths.concat(getObjectPaths(val, newPath))
+      paths = paths.concat(getObjectPaths(val as Input, newPath))
     }
   })
 
   if (!curPath) {
-    paths = paths.map((path) => _.trimStart(path, '.'))
+    paths = paths.map(path => _.trimStart(path, '.'))
   }
   return paths
 }
@@ -28,8 +28,8 @@ export function getObjectsDiff(left: Input, right: Input) {
   const leftPaths = getObjectPaths(left)
 
   const reducer: {
-    values: Record<string, any>;
-    paths: string[];
+    values: Record<string, any>
+    paths: string[]
   } = {
     values: {},
     paths: [],
@@ -74,7 +74,7 @@ export function convertSpecial(val: any) {
   return val
 }
 
-export function compact(obj: any) {
+export function compact(obj: any): any {
   obj = convertSpecial(obj)
   if (isSimplePrimitive(obj)) {
     return obj
@@ -89,7 +89,7 @@ export function compact(obj: any) {
     if (isSimplePrimitive(objItem)) {
       result[objKey] = objItem
     } else if (_.isArray(objItem)) {
-      result[objKey] = _.filter(objItem, (v) => !_.isNil(v))
+      result[objKey] = _.filter(objItem, v => !_.isNil(v))
       _.each(result[objKey], (arrItem, arrIndex) => {
         result[objKey][arrIndex] = compact(arrItem)
       })

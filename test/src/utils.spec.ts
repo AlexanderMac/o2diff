@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import should from 'should'
 
 import * as utils from '../../src/utils'
