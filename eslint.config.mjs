@@ -12,6 +12,7 @@ export default [
       'dist/**',
       "**/*.mjs",
       "index.d.ts",
+      "jest.config.js",
       "rollup.config.js",
     ],
   },
@@ -38,6 +39,6 @@ export default [
       "@typescript-eslint/no-unsafe-member-access": "off",
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unsafe-argument": "off"
-    }
+    },
   }
 ];

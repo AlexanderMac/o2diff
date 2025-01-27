@@ -1,5 +1,4 @@
 import * as _ from 'lodash'
-import should from 'should'
 
 import * as o2diff from '../../src/index'
 import { getObjectID } from './test-utils'
@@ -16,7 +15,7 @@ describe('o2diff / main', () => {
           right: {},
         }
         const actual = o2diff.diff(original, current)
-        should(actual).eql(expected)
+        expect(actual).toEqual(expected)
       })
 
       it('should return the empty left and the right equals the current when the original is null', () => {
@@ -30,7 +29,7 @@ describe('o2diff / main', () => {
           },
         }
         const actual = o2diff.diff(original, current)
-        should(actual).eql(expected)
+        expect(actual).toEqual(expected)
       })
 
       it('should return the left equals the original and the empty right when the current is null', () => {
@@ -44,7 +43,7 @@ describe('o2diff / main', () => {
           right: {},
         }
         const actual = o2diff.diff(original, current)
-        should(actual).eql(expected)
+        expect(actual).toEqual(expected)
       })
     })
 
@@ -60,7 +59,7 @@ describe('o2diff / main', () => {
           right: {},
         }
         const actual = o2diff.diff(original, current)
-        should(actual).eql(expected)
+        expect(actual).toEqual(expected)
       })
 
       it('should return the left and the right with one element when the middle element is changed', () => {
@@ -76,7 +75,7 @@ describe('o2diff / main', () => {
           },
         }
         const actual = o2diff.diff(original, current)
-        should(actual).eql(expected)
+        expect(actual).toEqual(expected)
       })
 
       it('should return the left with one element and the right with two elements when two elements are added at the end', () => {
@@ -93,7 +92,7 @@ describe('o2diff / main', () => {
           },
         }
         const actual = o2diff.diff(original, current)
-        should(actual).eql(expected)
+        expect(actual).toEqual(expected)
       })
     })
 
@@ -120,7 +119,7 @@ describe('o2diff / main', () => {
           },
         }
         const actual = o2diff.diff(original, current)
-        should(actual).eql(expected)
+        expect(actual).toEqual(expected)
       })
     })
 
@@ -201,7 +200,7 @@ describe('o2diff / main', () => {
           },
         }
         const actual = o2diff.diff(original, current)
-        should(actual).eql(expected)
+        expect(actual).toEqual(expected)
       })
 
       it('should return the changed values for two objects in diffValues format', () => {
@@ -241,7 +240,7 @@ describe('o2diff / main', () => {
           },
         }
         const actual = o2diff.diffValues(original, current)
-        should(actual).eql(expected)
+        expect(actual).toEqual(expected)
       })
 
       it('should return the changed paths for two objects in diffPaths format', () => {
@@ -261,7 +260,7 @@ describe('o2diff / main', () => {
           deleted: ['lastName'],
         }
         const actual = o2diff.diffPaths(original, current)
-        should(actual).eql(expected)
+        expect(actual).toEqual(expected)
       })
     })
   })
@@ -301,7 +300,7 @@ describe('o2diff / main', () => {
       const actual = o2diff.revert(src, dst, (srcVal, dstVal) => {
         return _.includes(srcVal, 'param_') ? srcVal : dstVal
       })
-      should(actual).eql(expected)
+      expect(actual).toEqual(expected)
     })
   })
 
@@ -318,7 +317,7 @@ describe('o2diff / main', () => {
       const expected = ['a', 'b.ba', 'b.bc[0]', 'b.bc[1]', 'b.bc[2]', 'c[0].ca', 'c[0].cb[0]', 'c[0].cb[1]', 'c[1]']
 
       const actual = o2diff.getPaths(obj)
-      should(actual).eql(expected)
+      expect(actual).toEqual(expected)
     })
   })
 
@@ -347,7 +346,7 @@ describe('o2diff / main', () => {
       }
 
       const actual = o2diff.omitPaths(obj, excludedPaths)
-      should(actual).eql(expected)
+      expect(actual).toEqual(expected)
     })
   })
 })

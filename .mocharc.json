@@ -1,7 +1,0 @@
-{
-  "ui": "bdd",
-  "reporter": "dot",
-  "recursive": true,
-  "extension": ["ts"],
-  "require": "ts-node/register"
-}
