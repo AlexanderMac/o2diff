@@ -2,11 +2,11 @@
   "name": "o2diff",
   "version": "5.0.0",
   "description": "Returns the difference between two objects",
-  "main": "build/index.js",
-  "browser": "build/index.js",
-  "typings": "build/index.d.ts",
+  "main": "dist/index.js",
+  "browser": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "files": [
-    "build/**"
+    "dist/**"
   ],
   "engines": {
     "node": ">=18",

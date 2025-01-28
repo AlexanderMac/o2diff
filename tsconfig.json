@@ -4,7 +4,7 @@
     "noImplicitAny": true,
     "removeComments": true,
     "target": "es2020",
-    "outDir": "./build/",
+    "outDir": "./dist/",
     "sourceMap": false,
     "allowJs": true,
     "skipLibCheck": true,

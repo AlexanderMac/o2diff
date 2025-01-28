@@ -5,9 +5,12 @@ module.exports = [
   {
     input: 'src/index.ts',
     output: {
-      dir: "build",
+      dir: "dist",
       name: 'o2diff',
       format: 'umd',
+      globals: {
+        'lodash': '_',
+      },
     },
     plugins: [
       typescript(),
@@ -19,7 +22,7 @@ module.exports = [
   {
     input: 'src/index.ts',
     output: {
-      dir: "build",
+      dir: "dist",
     },
     plugins: [
       dts.dts(),
