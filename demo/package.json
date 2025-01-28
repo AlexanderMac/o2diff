@@ -30,7 +30,7 @@
     "bootstrap": "^5.3.3",
     "codemirror": "^6.0.1",
     "lodash": "^4.17.21",
-    "o2diff": "github:AlexanderMac/o2diff#v5",
+    "o2diff": "^5.0.0",
     "rxjs": "~7.8.1",
     "zone.js": "~0.15.0"
   },
