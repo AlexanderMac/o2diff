@@ -14,6 +14,7 @@ type DiffType = 'values' | 'paths' | 'full'
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
+  styleUrl: 'app.component.sass',
   imports: [CommonModule, FormsModule],
 })
 export class AppComponent implements AfterViewInit {
