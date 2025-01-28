@@ -1,38 +1,28 @@
-const resolve = require('@rollup/plugin-node-resolve')
-const commonjs = require('@rollup/plugin-commonjs')
-const pkg = require('./package.json')
+const typescript = require('@rollup/plugin-typescript')
+const dts = require('rollup-plugin-dts')
 
 module.exports = [
   {
-    input: 'build/index.js',
+    input: 'src/index.ts',
     output: {
+      dir: "build",
       name: 'o2diff',
-      file: pkg.browser,
       format: 'umd',
-      globals: {
-        'lodash': '_'
-      }
     },
     plugins: [
-      resolve(),
-      commonjs()
+      typescript(),
     ],
     external: [
-      'lodash'
-    ]
+      'lodash',
+    ],
   },
-
   {
-    input: 'build/index.js',
-    output: [
-      {
-        file: pkg.main,
-        format: 'cjs'
-      },
-      {
-        file: pkg.module,
-        format: 'es'
-      }
-    ]
+    input: 'src/index.ts',
+    output: {
+      dir: "build",
+    },
+    plugins: [
+      dts.dts(),
+    ],
   }
 ]

@@ -2,13 +2,11 @@
   "name": "o2diff",
   "version": "5.0.0",
   "description": "Returns the difference between two objects",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "browser": "dist/index.umd.js",
-  "typings": "index.d.ts",
+  "main": "build/index.js",
+  "browser": "build/index.js",
+  "typings": "build/index.d.ts",
   "files": [
-    "dist",
-    "index.d.ts"
+    "build/**"
   ],
   "engines": {
     "node": ">=18",
@@ -16,11 +14,7 @@
   },
   "scripts": {
     "prepublish": "pnpm build",
-    "start": "ts-node-dev --rs --cls ./index.ts",
-    "clean": "rm -rf ./build ./dist",
-    "build": "pnpm clean && pnpm build:tsc && pnpm build:dist",
-    "build:tsc": "pnpm tsc --project tsconfig.dist.json",
-    "build:dist": "pnpm rollup -c",
+    "build": "pnpm rollup -c",
     "prettify": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "format": "pnpm lint && pnpm prettify",
     "lint": "eslint",
@@ -50,8 +44,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
-    "@rollup/plugin-commonjs": "^28.0.2",
-    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-typescript": "^12.1.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/jest": "^29.5.14",
     "@types/lodash": "^4.17.14",
@@ -62,8 +55,10 @@
     "nyc": "^17.1.0",
     "prettier": "^3.4.2",
     "rollup": "^4.32.0",
+    "rollup-plugin-dts": "^6.1.1",
     "ts-jest": "^29.2.5",
     "ts-node-dev": "^2.0.0",
+    "tslib": "^2.8.1",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.21.0"
   }
