@@ -11,6 +11,7 @@ export default [
       'build/**',
       'dist/**',
       'demo/**',
+      'docs/**',
       "**/*.mjs",
       "index.d.ts",
       "jest.config.js",
