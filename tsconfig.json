@@ -5,7 +5,7 @@
     "removeComments": true,
     "target": "es2020",
     "outDir": "./build/",
-    "sourceMap": true,
+    "sourceMap": false,
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -15,5 +15,8 @@
   "include": [
     "src/**/*.ts",
     "test/**/*.ts"
+  ],
+  "exclude": [
+    "demo"
   ]
 }

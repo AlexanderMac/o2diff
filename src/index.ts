@@ -1,29 +1,32 @@
-import * as _ from 'lodash'
+import { difference, get, intersection, set, trimEnd, trimStart } from 'lodash'
 
-import {
-  compact,
-  getObjectPaths,
-  getObjectsDiff,
-  getObjectValues,
-  Input,
-} from './utils'
+import { ArrayUnknown, Input, ObjectsDiff, RecordUnknown } from './types'
+import { compact, getObjectPaths, getObjectsDiff, getObjectValues } from './utils'
 
 export type DiffResult = {
-  left: Record<string, any>;
-  right: Record<string, any>;
-};
+  left: RecordUnknown | ArrayUnknown
+  right: RecordUnknown | ArrayUnknown
+}
 
 export type DiffValuesResult = {
-  changed: Record<string, any>;
-  added: Record<string, any>;
-  deleted: Record<string, any>;
-};
+  changed: RecordUnknown | ArrayUnknown
+  added: RecordUnknown | ArrayUnknown
+  deleted: RecordUnknown | ArrayUnknown
+}
 
 export type DiffPathsResult = {
-  changed: string[];
-  added: string[];
-  deleted: string[];
-};
+  changed: string[]
+  added: string[]
+  deleted: string[]
+}
+
+export type PathsResult = {
+  addedAndChanged: ObjectsDiff
+  deletedAndChanged: ObjectsDiff
+  changedPaths: string[]
+  addedPaths: string[]
+  deletedPaths: string[]
+}
 
 export function diff(original: Input, current: Input): DiffResult {
   const { addedAndChanged, deletedAndChanged } = _getPaths(original, current)
@@ -35,10 +38,7 @@ export function diff(original: Input, current: Input): DiffResult {
 }
 
 export function diffValues(original: Input, current: Input): DiffValuesResult {
-  const { changedPaths, addedPaths, deletedPaths } = _getPaths(
-    original,
-    current,
-  )
+  const { changedPaths, addedPaths, deletedPaths } = _getPaths(original, current)
 
   return {
     changed: getObjectValues(current, changedPaths),
@@ -48,10 +48,7 @@ export function diffValues(original: Input, current: Input): DiffValuesResult {
 }
 
 export function diffPaths(original: Input, current: Input): DiffPathsResult {
-  const { changedPaths, addedPaths, deletedPaths } = _getPaths(
-    original,
-    current,
-  )
+  const { changedPaths, addedPaths, deletedPaths } = _getPaths(original, current)
 
   return {
     changed: changedPaths,
@@ -63,30 +60,30 @@ export function diffPaths(original: Input, current: Input): DiffPathsResult {
 export function revert(
   dest: Input,
   src: Input,
-  customizer: (d: any, s: any) => any,
-) {
-  const srcPaths = getObjectPaths(src, '', _.isArray(src))
+  customizer: (d: unknown, s: unknown) => unknown,
+): RecordUnknown | ArrayUnknown {
+  const srcPaths = getObjectPaths(src, '', Array.isArray(src))
   return srcPaths.reduce((result, path) => {
-    const destValue = _.get(dest, path)
-    const srcValue = _.get(src, path)
+    const destValue = get(dest, path)
+    const srcValue = get(src, path)
     const value = customizer(destValue, srcValue)
-    _.set(result, path, value)
+    set(result, path, value)
     return result
   }, {})
 }
 
 export function getPaths(obj: Input): string[] {
-  return getObjectPaths(obj, '', _.isArray(obj))
+  return getObjectPaths(obj, '', Array.isArray(obj))
 }
 
-export function omitPaths(obj: Input, excludedPaths: string[]) {
-  const includedPaths = getPaths(obj).filter((path) => {
-    const isIgnored = excludedPaths.some((ignoredPath) => {
-      if (_.startsWith(ignoredPath, '*.')) {
-        return _.endsWith(path, _.trimStart(ignoredPath, '*.'))
+export function omitPaths(obj: Input, excludedPaths: string[]): RecordUnknown | ArrayUnknown {
+  const includedPaths = getPaths(obj).filter(path => {
+    const isIgnored = excludedPaths.some(ignoredPath => {
+      if (ignoredPath.startsWith('*.')) {
+        return path.endsWith(trimStart(ignoredPath, '*.'))
       }
-      if (_.endsWith(ignoredPath, '.*')) {
-        return _.startsWith(path, _.trimEnd(ignoredPath, '.*'))
+      if (ignoredPath.endsWith('.*')) {
+        return path.startsWith(trimEnd(ignoredPath, '.*'))
       }
       return ignoredPath === path
     })
@@ -96,16 +93,13 @@ export function omitPaths(obj: Input, excludedPaths: string[]) {
   return getObjectValues(obj, includedPaths)
 }
 
-function _getPaths(original: Input, current: Input) {
+function _getPaths(original: Input, current: Input): PathsResult {
   const addedAndChanged = getObjectsDiff(current, original)
   const deletedAndChanged = getObjectsDiff(original, current)
 
-  const changedPaths = _.intersection(
-    addedAndChanged.paths,
-    deletedAndChanged.paths,
-  )
-  const addedPaths = _.difference(addedAndChanged.paths, changedPaths)
-  const deletedPaths = _.difference(deletedAndChanged.paths, changedPaths)
+  const changedPaths = intersection(addedAndChanged.paths, deletedAndChanged.paths)
+  const addedPaths = difference(addedAndChanged.paths, changedPaths)
+  const deletedPaths = difference(deletedAndChanged.paths, changedPaths)
 
   return {
     addedAndChanged,

@@ -1,0 +1,43 @@
+<h1 class="text-center mt-2">O2Diff demo</h1>
+<div style="position: absolute; right: 1em; top: 1.5em">
+  <a href="https://github.com/AlexanderMac/o2diff">GitHub Repo</a>
+</div>
+<hr />
+
+<div class="container">
+  <div class="row mb-3">
+    <div class="col-lg-6">
+      <h3>Original Object</h3>
+      <div class="cm" #original=""></div>
+    </div>
+    <div class="col-lg-6">
+      <h3>Current Object</h3>
+      <div class="cm" #current=""></div>
+    </div>
+  </div>
+
+  <div class="row mb-1">
+    <div class="col">
+      <button class="btn btn-outline-secondary me-1" (click)="diff('values')">Values Diff</button>
+      <button class="btn btn-outline-secondary me-1" (click)="diff('paths')">Paths Diff</button>
+      <button class="btn btn-outline-secondary me-2" (click)="diff('full')">Full Diff</button>
+        <span class="me-1">|</span>
+        <strong [ngSwitch]="diffType">
+          <span *ngSwitchCase="'values'">Differences in values of two objects</span>
+          <span *ngSwitchCase="'paths'">Differences in paths of two objects</span>
+          <span *ngSwitchCase="'full'">All differences between two objects</span>
+        </strong>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <div class="cm" #changes=""></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col"><strong class="me-1">Status:</strong><span class="text-success" *ngIf="inputSuccess">{{
+        inputSuccess }}</span><span class="text-danger" *ngIf="inputError">{{ inputError }}</span></div>
+  </div>
+</div>

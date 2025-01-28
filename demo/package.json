@@ -1,0 +1,61 @@
+{
+  "name": "o2diff",
+  "version": "0.0.1",
+  "description": "o2diff demo",
+  "private": true,
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=9"
+  },
+  "scripts": {
+    "start": "ng serve",
+    "build": "ng build --configuration development",
+    "build:prod": "ng build --base-href /o2diff/",
+    "make-docs": " pnpm build:prod && mv dist/browser/ ../docs",
+    "lint": "ng lint --fix",
+    "prettify": "prettier --write \"src/**/*.ts\"",
+    "format": "pnpm lint && pnpm prettify"
+  },
+  "dependencies": {
+    "@angular/common": "^19.0.5",
+    "@angular/compiler": "^19.0.5",
+    "@angular/core": "^19.0.5",
+    "@angular/forms": "^19.0.5",
+    "@angular/platform-browser": "^19.0.5",
+    "@angular/platform-browser-dynamic": "^19.0.5",
+    "@angular/router": "^19.0.5",
+    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/language": "^6.6.0",
+    "@codemirror/state": "^6.2.0",
+    "bootstrap": "^5.3.3",
+    "codemirror": "^6.0.1",
+    "lodash": "^4.17.21",
+    "o2diff": "github:AlexanderMac/o2diff#v5",
+    "rxjs": "~7.8.1",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.0.6",
+    "@angular-eslint/builder": "^19.0.2",
+    "@angular-eslint/eslint-plugin": "^19.0.2",
+    "@angular-eslint/eslint-plugin-template": "^19.0.2",
+    "@angular-eslint/template-parser": "^19.0.2",
+    "@angular/cli": "^19.0.6",
+    "@angular/compiler-cli": "^19.0.5",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.0",
+    "eslint": "^9.17.0",
+    "prettier": "^3.4.2",
+    "tslib": "^2.8.1",
+    "typescript": "~5.6.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlexanderMac/o2diff"
+  },
+  "author": "Alexander Mac",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlexanderMac/o2diff/issues"
+  },
+  "homepage": "https://github.com/AlexanderMac/o2diff"
+}
