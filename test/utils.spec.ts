@@ -1,4 +1,4 @@
-import * as utils from '../../src/utils'
+import * as utils from '../src/utils'
 import { getObjectID } from './test-utils'
 
 describe('o2diff / utils', () => {
