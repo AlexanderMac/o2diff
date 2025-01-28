@@ -90,6 +90,9 @@
         return result;
     }
 
+    const getLibVersion = () => {
+        return '5.0.0';
+    };
     function diff(original, current) {
         const { addedAndChanged, deletedAndChanged } = _getPaths(original, current);
         return {
@@ -159,6 +162,7 @@
     exports.diff = diff;
     exports.diffPaths = diffPaths;
     exports.diffValues = diffValues;
+    exports.getLibVersion = getLibVersion;
     exports.getPaths = getPaths;
     exports.omitPaths = omitPaths;
     exports.revert = revert;

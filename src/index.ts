@@ -28,6 +28,10 @@ export type PathsResult = {
   deletedPaths: string[]
 }
 
+export const getLibVersion = () => {
+  return '5.0.0'
+}
+
 export function diff(original: Input, current: Input): DiffResult {
   const { addedAndChanged, deletedAndChanged } = _getPaths(original, current)
 

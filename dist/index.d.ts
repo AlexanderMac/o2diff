@@ -27,6 +27,7 @@ type PathsResult = {
     addedPaths: string[];
     deletedPaths: string[];
 };
+declare const getLibVersion: () => string;
 declare function diff(original: Input, current: Input): DiffResult;
 declare function diffValues(original: Input, current: Input): DiffValuesResult;
 declare function diffPaths(original: Input, current: Input): DiffPathsResult;
@@ -34,4 +35,4 @@ declare function revert(dest: Input, src: Input, customizer: (d: unknown, s: unk
 declare function getPaths(obj: Input): string[];
 declare function omitPaths(obj: Input, excludedPaths: string[]): RecordUnknown | ArrayUnknown;
 
-export { type DiffPathsResult, type DiffResult, type DiffValuesResult, type PathsResult, diff, diffPaths, diffValues, getPaths, omitPaths, revert };
+export { type DiffPathsResult, type DiffResult, type DiffValuesResult, type PathsResult, diff, diffPaths, diffValues, getLibVersion, getPaths, omitPaths, revert };
