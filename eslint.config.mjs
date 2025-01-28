@@ -10,6 +10,7 @@ export default [
     ignores: [
       'build/**',
       'dist/**',
+      'demo/**',
       "**/*.mjs",
       "index.d.ts",
       "jest.config.js",
