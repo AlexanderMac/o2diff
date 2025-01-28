@@ -298,7 +298,7 @@ describe('o2diff / main', () => {
       }
 
       const actual = o2diff.revert(src, dst, (srcVal, dstVal) => {
-        return _.includes(srcVal, 'param_') ? srcVal : dstVal
+        return _.includes(srcVal as any, 'param_') ? srcVal : dstVal
       })
       expect(actual).toEqual(expected)
     })

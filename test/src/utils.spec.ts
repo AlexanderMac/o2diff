@@ -43,13 +43,13 @@ describe('o2diff / utils', () => {
   describe('compact', () => {
     it('should return number when obj is number (simple primitive 1)', () => {
       const expected = 15
-      const actual = utils.compact(15)
+      const actual = utils.compact(15 as any)
       expect(actual).toEqual(expected)
     })
 
     it('should return string when obj is string (simple primitive 2)', () => {
       const expected = 'John'
-      const actual = utils.compact('John')
+      const actual = utils.compact('John' as any)
       expect(actual).toEqual(expected)
     })
 
