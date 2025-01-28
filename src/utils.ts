@@ -17,6 +17,10 @@ import {
 
 import { ArrayUnknown, Input, ObjectsDiff, RecordUnknown } from './types'
 
+export const getLibVersion = () => {
+  return '5.0.0'
+}
+
 export function getObjectPaths(input: Input, curPath = '', isArray = false): string[] {
   const paths: string[] = []
   forEach(input, (value, key) => {
