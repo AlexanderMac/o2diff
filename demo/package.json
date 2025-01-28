@@ -8,11 +8,10 @@
     "pnpm": ">=9"
   },
   "scripts": {
-    "ng": "ng",
-    "generate": "ng generate",
+    "start": "ng serve",
     "build": "ng build --configuration development",
     "build:prod": "ng build --base-href /o2diff/",
-    "start": "ng serve",
+    "make-docs": " pnpm build:prod && mv dist/browser/ ../docs",
     "lint": "ng lint --fix",
     "prettify": "prettier --write \"src/**/*.ts\"",
     "format": "pnpm lint && pnpm prettify"
@@ -25,13 +24,13 @@
     "@angular/platform-browser": "^19.0.5",
     "@angular/platform-browser-dynamic": "^19.0.5",
     "@angular/router": "^19.0.5",
-    "bootstrap": "^5.3.3",
-    "codemirror": "^6.0.1",
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/language": "^6.6.0",
     "@codemirror/state": "^6.2.0",
-    "o2diff": "github:AlexanderMac/o2diff",
+    "bootstrap": "^5.3.3",
+    "codemirror": "^6.0.1",
     "lodash": "^4.17.21",
+    "o2diff": "github:AlexanderMac/o2diff#v5",
     "rxjs": "~7.8.1",
     "zone.js": "~0.15.0"
   },
