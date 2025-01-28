@@ -48,8 +48,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       o2diff:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: github:AlexanderMac/o2diff
+        version: https://codeload.github.com/AlexanderMac/o2diff/tar.gz/77b80c244ceaba94c31a8e85ac3fc9b6bfd5b5a3
       rxjs:
         specifier: ~7.8.1
         version: 7.8.1
@@ -3442,8 +3442,9 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
-  o2diff@5.0.0:
-    resolution: {integrity: sha512-V8Vbgf/klPGbn0fczxC0BxK9KqhuiziCovXlC/qOpyeVtwmWVYe7SPic+SysTIANomTm0eEc274DlPGY7M3MPA==}
+  o2diff@https://codeload.github.com/AlexanderMac/o2diff/tar.gz/77b80c244ceaba94c31a8e85ac3fc9b6bfd5b5a3:
+    resolution: {tarball: https://codeload.github.com/AlexanderMac/o2diff/tar.gz/77b80c244ceaba94c31a8e85ac3fc9b6bfd5b5a3}
+    version: 5.0.0
     engines: {node: '>=18', npm: '>=9'}
 
   object-inspect@1.13.3:
@@ -8060,7 +8061,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  o2diff@5.0.0:
+  o2diff@https://codeload.github.com/AlexanderMac/o2diff/tar.gz/77b80c244ceaba94c31a8e85ac3fc9b6bfd5b5a3:
     dependencies:
       lodash: 4.17.21
 
