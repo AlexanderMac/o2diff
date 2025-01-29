@@ -3,7 +3,7 @@
     "module": "ES2020",
     "noImplicitAny": true,
     "removeComments": true,
-    "target": "es2020",
+    "target": "ES2023",
     "outDir": "./dist/",
     "sourceMap": false,
     "allowJs": true,

@@ -46,8 +46,8 @@ export function getObjectsDiff(left: Input, right: Input): ObjectsDiff {
     paths: [],
   }
   return leftPaths.reduce((result, path) => {
-    const leftVal = convertSpecial(get(left, path))
-    const rightVal = convertSpecial(get(right, path))
+    const leftVal = convertSpecial(get(left, path) as unknown)
+    const rightVal = convertSpecial(get(right, path) as unknown)
     if (!isEqual(leftVal, rightVal)) {
       set(result.values, path, leftVal)
       result.paths.push(path)
@@ -59,7 +59,7 @@ export function getObjectsDiff(left: Input, right: Input): ObjectsDiff {
 // TODO: test it
 export function getObjectValues(input: Input, paths: string[]): RecordUnknown | ArrayUnknown {
   const values = paths.reduce((result, path) => {
-    const value = convertSpecial(get(input, path))
+    const value = convertSpecial(get(input, path) as unknown)
     set(result, path, value)
     return result
   }, {})
@@ -88,7 +88,7 @@ export function convertSpecial<T>(value: T): T | string {
 export function compact(input: RecordUnknown | ArrayUnknown): RecordUnknown | ArrayUnknown {
   const value = convertSpecial(input)
   if (isSimplePrimitive(value)) {
-    return value as any
+    return value as RecordUnknown | ArrayUnknown
   }
   if (Array.isArray(value)) {
     return _compact(value)

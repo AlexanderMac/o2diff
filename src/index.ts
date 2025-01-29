@@ -68,8 +68,8 @@ export function revert(
 ): RecordUnknown | ArrayUnknown {
   const srcPaths = getObjectPaths(src, '', Array.isArray(src))
   return srcPaths.reduce((result, path) => {
-    const destValue = get(dest, path)
-    const srcValue = get(src, path)
+    const destValue = get(dest, path) as unknown
+    const srcValue = get(src, path) as unknown
     const value = customizer(destValue, srcValue)
     set(result, path, value)
     return result
