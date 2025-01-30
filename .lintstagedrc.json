@@ -1,5 +1,5 @@
 {
-  "index.ts|src/**/*.ts": [
+  "src/**/*.js": [
     "prettier --write",
     "eslint --fix"
   ]

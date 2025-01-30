@@ -5,7 +5,6 @@ tmp
 .tmp
 npm-debug.log
 .DS_STORE
-.angular
 
 # Runtime data
 pids

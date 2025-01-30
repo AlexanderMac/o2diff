@@ -7,7 +7,7 @@ class ObjectID {
     this._id = id ?? _random(1000)
   }
 
-  toString() {
+  toString(): string {
     return this._id.toString()
   }
 }

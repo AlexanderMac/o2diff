@@ -2,6 +2,7 @@ import * as _ from 'lodash'
 
 import * as o2diff from '../src/index'
 import { getObjectID } from './test-utils'
+import { Input } from '../src/types'
 
 describe('o2diff / main', () => {
   describe('diff', () => {
@@ -124,7 +125,7 @@ describe('o2diff / main', () => {
     })
 
     describe('inputs are complex objects', () => {
-      function getOriginal() {
+      function getOriginal(): Input {
         return {
           firstName: 'John',
           lastName: 'Smith',
@@ -137,7 +138,7 @@ describe('o2diff / main', () => {
         }
       }
 
-      function getCurrent() {
+      function getCurrent(): Input {
         return {
           firstName: 'Michael',
           age: 25,

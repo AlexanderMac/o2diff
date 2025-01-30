@@ -28,7 +28,7 @@ export type PathsResult = {
   deletedPaths: string[]
 }
 
-export const getLibVersion = () => {
+export const getLibVersion = (): string => {
   return '5.0.0'
 }
 
