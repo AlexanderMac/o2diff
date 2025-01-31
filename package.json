@@ -19,8 +19,8 @@
     "format": "pnpm lint && pnpm prettify",
     "lint": "eslint",
     "test": "NODE_ENV=test jest",
-    "coverage": "nyc pnpm test",
-    "coverage:codecov": "nyc --reporter=lcov pnpm test"
+    "coverage": "NODE_ENV=test jest --coverage",
+    "coverage:codecov": "pnpm coverage"
   },
   "keywords": [
     "object",
@@ -52,7 +52,6 @@
     "eslint": "^9.19.0",
     "globals": "^15.14.0",
     "jest": "^29.7.0",
-    "nyc": "^17.1.0",
     "prettier": "^3.4.2",
     "rollup": "^4.32.1",
     "rollup-plugin-dts": "^6.1.1",
