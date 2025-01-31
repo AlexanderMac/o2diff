@@ -9,8 +9,7 @@
     "dist/**"
   ],
   "engines": {
-    "node": ">=18",
-    "pnpm": ">=9"
+    "node": ">=18"
   },
   "scripts": {
     "prepublish": "pnpm build",
