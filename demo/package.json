@@ -4,8 +4,7 @@
   "description": "o2diff demo",
   "private": true,
   "engines": {
-    "node": ">=22",
-    "pnpm": ">=9"
+    "node": ">=22"
   },
   "scripts": {
     "start": "ng serve",
