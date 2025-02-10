@@ -16,7 +16,6 @@
 - [Install](#install)
 - [Usage](#usage)
 - [API](#api)
-- [References](#references)
 - [License](#license)
 
 # Install
