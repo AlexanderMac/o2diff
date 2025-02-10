@@ -24,7 +24,7 @@ export class AppComponent implements AfterViewInit {
   inputSuccess = ''
   inputError = ''
   diffType: DiffType | undefined
-  libVersion = (o2diff as any).getLibVersion()
+  libVersion = o2diff.getLibVersion()
 
   @ViewChild('original', { static: false }) original: any
   @ViewChild('current', { static: false }) current: any

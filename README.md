@@ -1,6 +1,6 @@
 <p align="center">
   <h1 align="center">o2diff</h1>
-  <p align="center">Compares two objects and returns the differences between them if different formats: changed values, changed paths, differences.</p>
+  <p align="center">Compares two objects and returns the differences between them in different formats: changed values, changed paths, differences.</p>
   <p align="center">Works in Node.js and in the browser.</p>
   <p align="center">
     <a href="https://github.com/alexandermac/o2diff/actions/workflows/ci.yml?query=branch%3Amaster"><img src="https://github.com/alexandermac/o2diff/actions/workflows/ci.yml/badge.svg" alt="Build Status"></a>
@@ -11,21 +11,22 @@
   <h3 align="center"><a href="https://alexandermac.github.io/o2diff">Demo</a></h3>
 </p>
 
-### Features
-- Provides three outputs:
-  - `diff`: `{ left, right }` the object differences.
-  - `values`: `{ changed, added, deleted }`, the changed values.
-  - `paths`: `{ changed, added, deleted }`, the changed paths.
-- Revert function, to revert the destination object to the source object.
+# Contents
+- [Contents](#contents)
+- [Install](#install)
+- [Usage](#usage)
+- [API](#api)
+- [References](#references)
+- [License](#license)
 
-### Install
+# Install
 ```bash
 $ pnpm i o2diff
 ```
 
-### Usage
+# Usage
 ```js
-const o2diff = require('o2diff')
+import { diff, diffPaths, diffValues } from 'o2diff'
 
 const original = {
   firstName: 'John',
@@ -53,54 +54,120 @@ const current = {
   }
 }
 
-o2diff.diff(original, current)       // returns { left, right } with objects diff
-o2diff.diffValues(original, current) // returns { changed, added, deleted } with values diff
-o2diff.diffPaths(original, current)  // returns { changed, added, deleted } with paths diff
+// objects diff
+diff(original, current)
+/*
+{
+  left: {
+    firstName: 'John',
+    lastName: 'Smith',
+    email: 'john@mail.com',
+    phones: [{ type: 'home', value: '+12222' }]
+  },
+  right: {
+    firstName: 'Michael',
+    age: 25,
+    email: 'michael@mail.com',
+    phones: [{ type: 'work', value: '+13333' }],
+    address: {
+      city: 'New York',
+      location: { latitude: 40.730610, longitude: -73.935242 }
+    }
+  }
+}
+*/
+
+// values diff
+diffValues(original, current)
+/*
+{
+  changed: {
+    firstName: 'Michael',
+    email: 'michael@mail.com',
+    phones: [{ type: 'home', value: '+12222' }]
+  },
+  added: {
+    age: 25,
+    address: {
+      city: 'New York',
+      location: { latitude: 40.730610, longitude: -73.935242 }
+    }
+  },
+  deleted: {
+    lastName: 'Smith'
+  }
+}
+*/
+
+// paths diff
+diffPaths(original, current)  
+/*
+{
+  changed: [
+    'firstName',
+    'email',
+    'phones[0].type',
+    'phones[0].value'
+  ],
+  added: [
+    'age',
+    'address.city',
+    'address.location.latitude',
+    'address.location.longitude'
+  ],
+  deleted: [
+    'lastName'
+  ]
+}
+*/
 ```
 
-### API
+# API
 
-##### diff(original, current)
-Returns the differences between `original` and `current`.
+### function diff(original: Input, current: Input): DiffResult
+Returns the difference between `original` and `current`.
 
-  - `original` - the original object.
-  - `current` - the current (actual) object.
-  - returns `{ left, right }` object.
+- `original: Input` - the original object.
+- `current: Input` - the current (actual) object.
+- returns `{ left, right }: DiffResult` object.
 
-##### diffValues(original, current)
-Returns the added, changed and deleted values between `original` and `current`.
+### function diffValues(original: Input, current: Input): DiffValuesResult
+Returns added, changed and deleted values between `original` and `current`.
 
-  - `original` - the original object.
-  - `current` - the current (actual) object.
-  - returns `{ changed, added, deleted }` object.
+- `original: Input` - the original object.
+- `current: Input` - the current (actual) object.
+- returns `{ changed, added, deleted }: DiffValuesResult` object.
 
-##### diffPaths(original, current)
-Returns the added, changed and deleted paths between `original` and `current`.
+### function diffPaths(original: Input, current: Input): DiffPathsResult
+Returns added, changed and deleted paths between `original` and `current`.
 
-  - `original` - the original object.
-  - `current` - the current (actual) object.
-  - returns `{ changed, added, deleted }` object.
+- `original: Input` - the original object.
+- `current: Input` - the current (actual) object.
+- returns `{ changed, added, deleted }: DiffPathsResult` object.
 
-##### revert(dest, src, customizer)
+### function revert(dest: Input, src: Input, customizer: (d: unknown, s: unknown) => unknown): RecordUnknown | ArrayUnknown;
 Reverts `dest` object to `src`, calls `customizer` for each `dest.path`.
 
-  - `dest` - the destination object.
-  - `src` - the source object.
-  - `customizer` - the function that is called for each `dest.path`.
+- `dest: Input` - the destination object.
+- `src: Input` - the source object.
+- `customizer: (d: unknown, s: unknown) => unknown)` - the function that is called for each `dest.path`.
+- returns a record or an array.
 
-##### getPaths(obj)
-Returns all the paths of the object.
+### function getPaths(obj: Input): string[]
+Returns all paths of the object.
 
-  - `obj` - the object.
+- `obj: Input` - the source object.
+- returns the list of paths.
 
-##### omitPaths(obj, excludedPaths)
+### function omitPaths(obj: Input, excludedPaths: string[]): RecordUnknown | ArrayUnknown
 Returns the object without `excludedPaths`.
 
-  - `obj` - the object.
-  - `excludedPaths` - the array of paths to exclude. The path can be with mask: `*.name` or `name.*` to exclude only path started or ended with the name.
+- `obj: Input` - the source object.
+- `excludedPaths` - the array of paths to exclude. The path can be with mask: `*.name` or `name.*` to exclude only path started or ended with the name.
+- returns a record or an array.
 
-### License
+# License
 Licensed under the MIT license.
 
-### Author
+# Author
 Alexander Mac
