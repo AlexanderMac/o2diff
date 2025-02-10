@@ -10,7 +10,7 @@ export default [
     ignores: [
       'build/**',
       'dist/**',
-      'demo/**',
+      'docs-src/**',
       'docs/**',
       'tmp/**',
       "**/*.mjs",

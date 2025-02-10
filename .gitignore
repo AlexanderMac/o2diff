@@ -3,17 +3,13 @@ logs
 *.log
 tmp
 .tmp
-npm-debug.log
 .DS_STORE
-
-# Runtime data
-pids
-*.pid
-*.seed
+npm-debug.log
 
 # Coverage directory used by tools like istanbul
 coverage
 .nyc_output
+.angular
 
 # Compiled
 build
