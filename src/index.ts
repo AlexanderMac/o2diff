@@ -29,7 +29,7 @@ export type PathsResult = {
 }
 
 export const getLibVersion = (): string => {
-  return '5.0.0'
+  return '5.1.0'
 }
 
 export function diff(original: Input, current: Input): DiffResult {
