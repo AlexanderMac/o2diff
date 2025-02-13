@@ -47,7 +47,7 @@ jobs:
         with:
           node-version: 22
       - name: CD into docs-src
-        run cd docs-src
+        run: cd docs-src
       - name: Install dependencies
         run: pnpm i && pnpm add github:AlexanderMac/o2diff
       - name: Build app
