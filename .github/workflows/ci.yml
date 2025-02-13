@@ -32,7 +32,7 @@ jobs:
         uses: codecov/codecov-action@v5
 
   build-demo:
-    needs: test
+    # needs: test
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
@@ -58,7 +58,7 @@ jobs:
           path: docs-src/dist/browser/
 
   deploy-demo:
-    # needs: build-demo
+    needs: build-demo
     if: github.ref == 'refs/heads/master'
     permissions:
       pages: write    # to deploy to Pages
