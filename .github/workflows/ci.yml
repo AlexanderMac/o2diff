@@ -4,7 +4,6 @@ on:
 
 jobs:
   test:
-    if: false
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -32,7 +31,7 @@ jobs:
         uses: codecov/codecov-action@v5
 
   build-demo:
-    # needs: test
+    needs: test
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
@@ -47,13 +46,13 @@ jobs:
         with:
           node-version: 22
       - name: Install dependencies
-        run: pnpm -C docs-src install && pnpm -C docs-src add github:AlexanderMac/o2diff
+        run: pnpm -C demo install && pnpm -C demo add github:AlexanderMac/o2diff
       - name: Build app
-        run: pnpm -C docs-src run build:prod
+        run: pnpm -C demo run build:prod
       - name: Upload demo build as artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs-src/dist/browser/
+          path: demo/dist/browser/
 
   deploy-demo:
     needs: build-demo
