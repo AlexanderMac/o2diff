@@ -54,7 +54,7 @@ jobs:
           path: docs-src/dist/browser/
 
   deploy-demo:
-    needs: build
+    needs: build-demo
     if: github.ref == 'refs/heads/master'
     permissions:
       pages: write    # to deploy to Pages
