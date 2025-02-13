@@ -1,6 +1,6 @@
 {
   "name": "o2diff",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "Returns the difference between two objects",
   "main": "dist/index.js",
   "browser": "dist/index.js",

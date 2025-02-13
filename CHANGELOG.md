@@ -1,5 +1,8 @@
 # Changelog
 
+## v5.1.0 (Feb. 13, 2025)
+- Minor changes and improvements.
+
 ## v5.0.0 (Jan. 28, 2025)
 - Drop support for Node versions prior to v18.
 - Use named types instead of any.
