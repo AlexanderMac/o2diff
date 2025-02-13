@@ -91,7 +91,7 @@
     }
 
     const getLibVersion = () => {
-        return '5.1.0';
+        return '5.1.0b';
     };
     function diff(original, current) {
         const { addedAndChanged, deletedAndChanged } = _getPaths(original, current);
