@@ -46,12 +46,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: CD into docs-src
-        run: cd docs-src
       - name: Install dependencies
-        run: pnpm i && pnpm add github:AlexanderMac/o2diff
+        run: pnpm -C docs-src install && pnpm -C docs-src add github:AlexanderMac/o2diff
       - name: Build app
-        run: pnpm build:prod
+        run: pnpm -C docs-src run build:prod
       - name: Upload demo build as artifact
         uses: actions/upload-pages-artifact@v3
         with:
