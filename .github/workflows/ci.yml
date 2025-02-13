@@ -1,6 +1,8 @@
 name: ci
 on:
-  - push
+  - push:
+      branches:
+        - main
 
 jobs:
   test:
@@ -29,3 +31,40 @@ jobs:
         run: pnpm coverage:codecov
       - name: Upload coverage reports
         uses: codecov/codecov-action@v5
+
+  build-demo:
+    needs: test
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Fetch Repository
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies and build app
+        run: pnpm -C docs-src install && pnpm -C docs-src add github:AlexanderMac/o2diff && pnpm -C docs-src run build:prod
+      - name: Upload demo build as artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs-src/dist/browser/
+
+  deploy-demo:
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    permissions:
+      pages: write    # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
