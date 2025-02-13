@@ -28,7 +28,6 @@
     "@codemirror/state": "^6.5.1",
     "bootstrap": "^5.3.3",
     "codemirror": "^6.0.1",
-    "lodash": "^4.17.21",
     "o2diff": "github:AlexanderMac/o2diff",
     "rxjs": "~7.8.1",
     "zone.js": "~0.15.0"

@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms'
 import { json } from '@codemirror/lang-json'
 import { Compartment, EditorState } from '@codemirror/state'
 import { basicSetup, EditorView } from 'codemirror'
-import { attempt, isError } from 'lodash'
 import * as o2diff from 'o2diff'
 
 import { sample } from '@app/sample'
@@ -45,11 +44,11 @@ export class AppComponent implements AfterViewInit {
     this._clearMessages()
     const original = this._getObject(this.cmOriginalEditor)
     const current = this._getObject(this.cmCurrentEditor)
-    if (isError(original)) {
+    if (original instanceof Error) {
       this.inputError = original.message
       return
     }
-    if (isError(current)) {
+    if (current instanceof Error) {
       this.inputError = current.message
       return
     }
@@ -95,9 +94,14 @@ export class AppComponent implements AfterViewInit {
     })
   }
 
-  private _getObject(cmEditor: EditorView): any {
+  private _getObject(cmEditor: EditorView): any | Error {
     const json = cmEditor.state.doc.toString()
-    return attempt(JSON.parse.bind(JSON, json))
+    try {
+      const result = JSON.parse(json)
+      return result
+    } catch (err) {
+      return <Error>err
+    }
   }
 
   private _stringifyJson(obj: any): string {
